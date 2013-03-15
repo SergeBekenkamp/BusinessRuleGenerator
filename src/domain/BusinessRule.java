@@ -11,12 +11,13 @@ public class BusinessRule {
 	private ArrayList<ConditionalValue> conditionalValues = new ArrayList<ConditionalValue>();
 	private TriggerEvent triggerEvent;
 
-	public BusinessRule(String name, Operator operator, TriggerEvent trigger, Entity entity, Attribute att) {
+	public BusinessRule(String name, Operator operator, TriggerEvent trigger, Entity entity, Attribute att, BusinessRuleType brt) {
 		this.name = name;
 		this.operator = operator;
 		this.triggerEvent = trigger;
 		this.entity = entity;
 		this.attribute = att;
+		this.businessRuleType = brt;
 	}
 
 	public boolean addConditionalValue(ConditionalValue value) {

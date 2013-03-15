@@ -9,62 +9,76 @@ import domain.BusinessRule;
 import domain.ConditionalValue;
 
 public class SQLGenerator implements IGenerator {
-	
+
 	private FileIterator fileIterator;
 	private Map<String, String> replacers = new HashMap<String, String>();
 	private SQLOutput output = new SQLOutput();
-	
+
 	@Override
-	public void generate(ArrayList<BusinessRule> businessRules)	throws GenerationException {
-		for(BusinessRule b : businessRules){
-			if (b.getBusinessRuleType().getName().equals("ARNG")) {
+	public void generate(ArrayList<BusinessRule> businessRules)
+			throws GenerationException {
+		for (BusinessRule b : businessRules) {
+			if (b.getBusinessRuleType().getCode().equals("ARNG")) {
 				replacers = setReplacers(b);
-				fileIterator = new FileIterator("ARNG.txt");
+				fileIterator = new FileIterator("SQLTemplate\\ARNG.txt");
 				String s = "";
-				while (s != null){
+				while (s != null) {
 					s = fileIterator.nextLine();
-					for (Map.Entry<String, String> entry : replacers.entrySet()) {
-						s = s.replaceAll(entry.getKey(), entry.getValue());
+					if (s != null) {
+						for (Map.Entry<String, String> entry : replacers
+								.entrySet()) {
+							s = s.replaceAll(entry.getKey(), entry.getValue());
+						}
+						output.addString(s);
 					}
-					output.addString(s);
 				}
+				System.out.println("OUtput ???");
 				output.saveOutput(b.getName());
 				fileIterator.close();
 			}
-			
+
 		}
 	}
-	
-	private Map<String, String> setReplacers(BusinessRule br){
+
+	private Map<String, String> setReplacers(BusinessRule br) {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("<<trigger_name>>", "ARNG_TRIGGER");
-		map.put("<<trigger_event>>", br.getTriggetEvent().getTriggerActivation());
+		map.put("<<trigger_event>>", br.getTriggetEvent()
+				.getTriggerActivation());
 		map.put("<<column_name>>", br.getAttribute().getColumnName());
 		map.put("<<entity_name>>", br.getAttribute().getEntity().getTableName());
-		
+
 		String operator = "";
 		switch (br.getOperator().getName()) {
-			case "Between": operator = "BETWEEN";
-				break;
-			case "NotBetween": operator = "NOT BETWEEN";
-				break;
-			case "Equals": operator = "=";
-				break;
-			case "NotEquals": operator = "!=";
-				break;
-			case "LessThan": operator = "<";
-				break;
-			case "GreaterThan": operator = ">";
-				break;
-			case "LessOrEqualTo": operator = "<=";
-				break;
-			case "GreaterOrEqualTo": operator = ">=";
-				break;
+		case "Between":
+			operator = "BETWEEN";
+			break;
+		case "NotBetween":
+			operator = "NOT BETWEEN";
+			break;
+		case "Equals":
+			operator = "=";
+			break;
+		case "NotEquals":
+			operator = "!=";
+			break;
+		case "LessThan":
+			operator = "<";
+			break;
+		case "GreaterThan":
+			operator = ">";
+			break;
+		case "LessOrEqualTo":
+			operator = "<=";
+			break;
+		case "GreaterOrEqualTo":
+			operator = ">=";
+			break;
 		}
 		map.put("<<operator>>", operator);
-		
+
 		int valueNumber = 1;
-		for(ConditionalValue cv : br.getConditionalValues()){
+		for (ConditionalValue cv : br.getConditionalValues()) {
 			map.put("<<value" + valueNumber + ">>", cv.getValue());
 			valueNumber++;
 		}
