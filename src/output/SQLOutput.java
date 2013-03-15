@@ -16,7 +16,7 @@ public class SQLOutput implements IOutput {
 
 	@Override
 	public boolean saveOutput(String fileName) {
-		File file = new File("c:\\" + fileName);
+		File file = new File("c:\\SQLOutput\\" + fileName);
 		System.out.println(sb.toString());
 		try {
 		BufferedWriter writer = new BufferedWriter(new FileWriter(file));
@@ -27,6 +27,7 @@ public class SQLOutput implements IOutput {
 			System.out.println(e);
 			return false;
 		}
+		sb = new StringBuilder();
 		return true;
 	}
 	
