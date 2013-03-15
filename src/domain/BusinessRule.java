@@ -7,18 +7,16 @@ public class BusinessRule {
 	private BusinessRuleType businessRuleType;
 	private Operator operator;
 	private Entity entity;
-	private ArrayList<Attribute> attributes = new ArrayList<Attribute>();
+	private Attribute attribute;
 	private ArrayList<ConditionalValue> conditionalValues = new ArrayList<ConditionalValue>();
 	private TriggerEvent triggerEvent;
 
-	public BusinessRule(String name, Operator operator, TriggerEvent trigger, Entity entity, Attribute[] att) {
+	public BusinessRule(String name, Operator operator, TriggerEvent trigger, Entity entity, Attribute att) {
 		this.name = name;
 		this.operator = operator;
-		triggerEvent = trigger;
+		this.triggerEvent = trigger;
 		this.entity = entity;
-		for(Attribute attribute : att){
-			attributes.add(attribute);
-		}
+		this.attribute = att;
 	}
 
 	public boolean addConditionalValue(ConditionalValue value) {
@@ -33,20 +31,12 @@ public class BusinessRule {
 		return conditionalValues.remove(value);
 	}
 	
-	public boolean addAttribute(Attribute att){
-		if(attributes.contains(att)){
-			return false;
-		}
-		attributes.add(att);
-		return true;
-	}
-	
-	public boolean removeAttribute(Attribute att){
-		return attributes.remove(att);
+	public void setAttribute(Attribute att){
+		this.attribute = att;
 	}
 
-	public ArrayList<Attribute> getAttributes() {
-		return attributes;
+	public Attribute getAttribute() {
+		return attribute;
 	}
 
 	public ArrayList<ConditionalValue> getConditionalValues() {
