@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import output.SQLOutput;
 import domain.BusinessRule;
 import domain.ConditionalValue;
 
@@ -17,6 +18,7 @@ public class SQLGenerator implements IGenerator {
 	public void generate(ArrayList<BusinessRule> businessRules)	throws GenerationException {
 		for(BusinessRule b : businessRules){
 			if (b.getBusinessRuleType().getName().equals("ARNG")) {
+				replacers = setReplacers(b);
 				fileIterator = new FileIterator("ARNG.txt");
 				String s = "";
 				while (s != null){
@@ -26,7 +28,7 @@ public class SQLGenerator implements IGenerator {
 					}
 					output.addString(s);
 				}
-				output.saveOutput();
+				output.saveOutput(b.getName());
 				fileIterator.close();
 			}
 			
@@ -66,6 +68,6 @@ public class SQLGenerator implements IGenerator {
 			map.put("<<value" + valueNumber + ">>", cv.getValue());
 			valueNumber++;
 		}
-		
+		return map;
 	}
 }
