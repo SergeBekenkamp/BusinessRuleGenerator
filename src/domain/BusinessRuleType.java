@@ -30,6 +30,11 @@ public class BusinessRuleType {
 		return operators.remove(op);
 	}
 
+	
+	public ArrayList<Operator> getOperators() {
+		return operators;
+	}
+
 	public String getCode() {
 		return code;
 	}

@@ -44,7 +44,14 @@ public class BusinessRule {
 	public boolean removeAttribute(Attribute att){
 		return attributes.remove(att);
 	}
-	
+
+	public ArrayList<Attribute> getAttributes() {
+		return attributes;
+	}
+
+	public ArrayList<ConditionalValue> getConditionalValues() {
+		return conditionalValues;
+	}
 
 	public String getName() {
 		return name;
