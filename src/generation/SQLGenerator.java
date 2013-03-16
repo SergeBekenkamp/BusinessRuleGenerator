@@ -18,9 +18,8 @@ public class SQLGenerator implements IGenerator {
 	public void generate(ArrayList<BusinessRule> businessRules)
 			throws GenerationException {
 		for (BusinessRule b : businessRules) {
-			if (b.getBusinessRuleType().getCode().equals("ARNG")) {
 				replacers = setReplacers(b);
-				fileIterator = new FileIterator("SQLTemplate\\ARNG.txt");
+				fileIterator = new FileIterator("SQLTemplate\\" + b.getBusinessRuleType().getCode() + ".txt");
 				String s = "";
 				while (s != null) {
 					s = fileIterator.nextLine();
@@ -32,17 +31,14 @@ public class SQLGenerator implements IGenerator {
 						output.addString(s);
 					}
 				}
-				System.out.println("OUtput ???");
 				output.saveOutput(b.getName());
 				fileIterator.close();
-			}
-
 		}
 	}
 
 	private Map<String, String> setReplacers(BusinessRule br) {
 		Map<String, String> map = new HashMap<String, String>();
-		map.put("<<trigger_name>>", "ARNG_TRIGGER");
+		map.put("<<trigger_name>>", br.getBusinessRuleType().getCode() + "_" + br.getName() + "_TRIGGER");
 		map.put("<<trigger_event>>", br.getTriggetEvent()
 				.getTriggerActivation());
 		map.put("<<column_name>>", br.getAttribute().getColumnName());

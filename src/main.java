@@ -25,7 +25,7 @@ public class main {
 		ConditionalValue cv2 = new ConditionalValue("value2", "20", cvt);
 		BusinessRuleType brt = new BusinessRuleType("ARNG", "BLALALALA", "DESCRIPTION", "DAT EXAMPLE");
 
-		BusinessRule b = new BusinessRule("ARNG", o, te, ent, att, brt);
+		BusinessRule b = new BusinessRule("Attributerangerule", o, te, ent, att, brt);
 		b.addConditionalValue(cv1);
 		b.addConditionalValue(cv2);
 		SQLGenerator gen = new SQLGenerator();
