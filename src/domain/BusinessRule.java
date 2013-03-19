@@ -80,7 +80,7 @@ public class BusinessRule {
 		triggerEvent = event;
 	}
 	
-	public TriggerEvent getTriggetEvent(){
+	public TriggerEvent getTriggerEvent(){
 		return triggerEvent;
 	}
 

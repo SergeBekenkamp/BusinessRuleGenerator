@@ -39,7 +39,7 @@ public class SQLGenerator implements IGenerator {
 	private Map<String, String> setReplacers(BusinessRule br) {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("<<trigger_name>>", br.getBusinessRuleType().getCode() + "_" + br.getName() + "_TRIGGER");
-		map.put("<<trigger_event>>", br.getTriggetEvent()
+		map.put("<<trigger_event>>", br.getTriggerEvent()
 				.getTriggerActivation());
 		map.put("<<column_name>>", br.getAttribute().getColumnName());
 		map.put("<<entity_name>>", br.getAttribute().getEntity().getTableName());
