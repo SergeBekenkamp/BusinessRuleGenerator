@@ -7,6 +7,12 @@ public class ConditionalValue {
 	private Attribute attribute;
 	private ConditionalValueType type;
 	
+	public ConditionalValue(String name, Attribute attribute, ConditionalValueType type){
+		this.name = name;
+		this.attribute = attribute;
+		this.type = type;
+	}
+	
 	public ConditionalValue(String name, String value, ConditionalValueType type){
 		this.name = name;
 		this.value = value;

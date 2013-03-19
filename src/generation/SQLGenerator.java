@@ -79,25 +79,22 @@ public class SQLGenerator implements IGenerator {
 		}
 		map.put("<<operator>>", operator);
 		
-		if (br.getBusinessRuleType().getCode().equals("ALIS")) {
-			String multiValues = "";
-			String comma = "";
-			int count = 1;
-			for (ConditionalValue cv : br.getConditionalValues()) {
-				if (count != 1) { comma = ", ";} else { comma = ""; }
-				multiValues += comma + "'" + cv.getValue() + "'";
-				count++;
+		String multiValues = "";
+		String comma = "";
+		int valueNumber = 1;
+		for (ConditionalValue cv : br.getConditionalValues()) {
+			if (cv.getAttribute() != null) {
+				map.put("<<column2_name>>", cv.getAttribute().getColumnName());
 			}
-			
-			map.put("<<multiple_values>>", multiValues);
-		}
-		else {
-			int valueNumber = 1;
-			for (ConditionalValue cv : br.getConditionalValues()) {
+			else {
+				if (valueNumber != 1) { comma = ", ";} else { comma = ""; }
+				multiValues += comma + "'" + cv.getValue() + "'";
 				map.put("<<value" + valueNumber + ">>", cv.getValue());
 				valueNumber++;
 			}
 		}
+		map.put("<<multiple_values>>", multiValues);
+			
 		return map;
 	}
 }

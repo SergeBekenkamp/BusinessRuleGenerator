@@ -27,7 +27,7 @@ public class main {
 		ConditionalValue cv2Range = new ConditionalValue("value2", "20", cvtRange);
 		BusinessRuleType brtRange = new BusinessRuleType("ARNG", "BLALALALA", "DESCRIPTION", "DAT EXAMPLE");
 
-		BusinessRule rangeRule = new BusinessRule("Attributerangerule", oRange, teRange, entRange, attRange, brtRange);
+		BusinessRule rangeRule = new BusinessRule("AttributeRangeRule", oRange, teRange, entRange, attRange, brtRange);
 		rangeRule.addConditionalValue(cv1Range);
 		rangeRule.addConditionalValue(cv2Range);
 		
@@ -56,16 +56,32 @@ public class main {
 		ConditionalValue cv3List = new ConditionalValue("value1", "Sjaak", cvtList);
 		BusinessRuleType brtList = new BusinessRuleType("ALIS", "list", "description", "example");
 
-		BusinessRule listRule = new BusinessRule("Attributelistrule", oList, teList, entList, attList, brtList);
+		BusinessRule listRule = new BusinessRule("AttributeListRule", oList, teList, entList, attList, brtList);
 		listRule.addConditionalValue(cv1List);
 		listRule.addConditionalValue(cv2List);
 		listRule.addConditionalValue(cv3List);
+		
+		// Tuple Compare Rule
+		Operator oTupleComp = new Operator("Equals", 1);
+		TriggerEvent teTupleComp = new TriggerEvent("insert OR update");
+		Entity entTupleComp = new Entity("Persoon");
+		Attribute attTupleComp = new Attribute("naam", "String");
+		attTupleComp.setEntity(entTupleComp);
+		Attribute attTupleComp2 = new Attribute("achternaam", "String");
+		attTupleComp2.setEntity(entTupleComp);
+		ConditionalValueType cvtTupleComp = new ConditionalValueType("String");
+		ConditionalValue cvTupleComp = new ConditionalValue("Persoon.achternaam", attTupleComp2, cvtTupleComp);
+		BusinessRuleType brtTupleComp = new BusinessRuleType("TCMP", "list", "description", "example");
+
+		BusinessRule tupleCompRule = new BusinessRule("TupleCompareRule", oTupleComp, teTupleComp, entTupleComp, attTupleComp, brtTupleComp);
+		tupleCompRule.addConditionalValue(cvTupleComp);
 		
 		SQLGenerator gen = new SQLGenerator();
 		ArrayList<BusinessRule> brl = new ArrayList<BusinessRule>();
 		brl.add(rangeRule);
 		brl.add(compareRule);
 		brl.add(listRule);
+		brl.add(tupleCompRule);
 		
 		try {
 			gen.generate(brl);
