@@ -1,0 +1,16 @@
+-- TRIGGER FOR ATTRIBUTE LIST RULE
+
+CREATE OR REPLACE TRIGGER <<trigger_name>>
+BEFORE <<trigger_event>>
+OF <<column_name>> ON <<entity_name>>
+FOR EACH ROW
+declare
+  l_passed boolean := true;
+  l_error_stack varchar2(4000);
+BEGIN
+  l_passed := :NEW.<<column_name>> <<operator>> (<<multiple_values>>);
+  if not l_passed then
+    l_error_stack := l_error_stack || 'The value of <<column_name>> was not found in the values';
+    raise_application_error(-20000, l_error_stack);
+  end if;  
+END; 

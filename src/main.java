@@ -15,6 +15,8 @@ public class main {
 
 	public static void main(String[] args0) {
 		System.out.println(System.getProperty("user.dir"));
+		
+		// Attribute Range Rule
 		Operator oRange = new Operator("Between", 2);
 		TriggerEvent teRange = new TriggerEvent("insert OR update");
 		Entity entRange = new Entity("SPRUIJT");
@@ -29,6 +31,7 @@ public class main {
 		rangeRule.addConditionalValue(cv1Range);
 		rangeRule.addConditionalValue(cv2Range);
 		
+		// Attribute Compare Rule
 		Operator oCompare = new Operator("Equals", 1);
 		TriggerEvent teCompare = new TriggerEvent("insert OR update");
 		Entity entCompare = new Entity("Stok");
@@ -41,10 +44,29 @@ public class main {
 		BusinessRule compareRule = new BusinessRule("Attributecomparerule", oCompare, teCompare, entCompare, attCompare, brtCompare);
 		compareRule.addConditionalValue(cvCompare);
 		
+		// Attribute List Rule
+		Operator oList = new Operator("NotIn", 1);
+		TriggerEvent teList = new TriggerEvent("insert OR update");
+		Entity entList = new Entity("Persoon");
+		Attribute attList = new Attribute("naam", "String");
+		attList.setEntity(entList);
+		ConditionalValueType cvtList = new ConditionalValueType("String");
+		ConditionalValue cv1List = new ConditionalValue("value1", "Henk", cvtList);
+		ConditionalValue cv2List = new ConditionalValue("value1", "Frits", cvtList);
+		ConditionalValue cv3List = new ConditionalValue("value1", "Sjaak", cvtList);
+		BusinessRuleType brtList = new BusinessRuleType("ALIS", "list", "description", "example");
+
+		BusinessRule listRule = new BusinessRule("Attributelistrule", oList, teList, entList, attList, brtList);
+		listRule.addConditionalValue(cv1List);
+		listRule.addConditionalValue(cv2List);
+		listRule.addConditionalValue(cv3List);
+		
 		SQLGenerator gen = new SQLGenerator();
 		ArrayList<BusinessRule> brl = new ArrayList<BusinessRule>();
 		brl.add(rangeRule);
 		brl.add(compareRule);
+		brl.add(listRule);
+		
 		try {
 			gen.generate(brl);
 		} catch (GenerationException e) {

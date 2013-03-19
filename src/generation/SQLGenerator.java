@@ -70,13 +70,33 @@ public class SQLGenerator implements IGenerator {
 		case "GreaterOrEqualTo":
 			operator = ">=";
 			break;
+		case "In":
+			operator = "IN";
+			break;
+		case "NotIn":
+			operator = "NOT IN";
+			break;
 		}
 		map.put("<<operator>>", operator);
-
-		int valueNumber = 1;
-		for (ConditionalValue cv : br.getConditionalValues()) {
-			map.put("<<value" + valueNumber + ">>", cv.getValue());
-			valueNumber++;
+		
+		if (br.getBusinessRuleType().getCode().equals("ALIS")) {
+			String multiValues = "";
+			String comma = "";
+			int count = 1;
+			for (ConditionalValue cv : br.getConditionalValues()) {
+				if (count != 1) { comma = ", ";} else { comma = ""; }
+				multiValues += comma + "'" + cv.getValue() + "'";
+				count++;
+			}
+			
+			map.put("<<multiple_values>>", multiValues);
+		}
+		else {
+			int valueNumber = 1;
+			for (ConditionalValue cv : br.getConditionalValues()) {
+				map.put("<<value" + valueNumber + ">>", cv.getValue());
+				valueNumber++;
+			}
 		}
 		return map;
 	}
