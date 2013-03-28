@@ -5,11 +5,11 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class FileIterator {
+public class TemplateLoader {
 
 	BufferedReader file;
 
-	public FileIterator(String file) {
+	public TemplateLoader(String file) {
 		try {
 			this.file = new BufferedReader(new FileReader(file));
 		} catch (FileNotFoundException e) {

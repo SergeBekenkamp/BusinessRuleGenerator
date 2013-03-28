@@ -9,15 +9,17 @@ public class BusinessRule {
 	private Entity entity;
 	private Attribute attribute;
 	private ArrayList<ConditionalValue> conditionalValues = new ArrayList<ConditionalValue>();
-	private TriggerEvent triggerEvent;
+	private Event event;
+	private Failure failure;
 
-	public BusinessRule(String name, Operator operator, TriggerEvent trigger, Entity entity, Attribute att, BusinessRuleType brt) {
+	public BusinessRule(String name, Operator operator, Event trigger, Entity entity, Attribute att, BusinessRuleType brt, Failure failure) {
 		this.name = name;
 		this.operator = operator;
-		this.triggerEvent = trigger;
+		this.event = trigger;
 		this.entity = entity;
 		this.attribute = att;
 		this.businessRuleType = brt;
+		this.failure = failure;
 	}
 
 	public boolean addConditionalValue(ConditionalValue value) {
@@ -76,12 +78,22 @@ public class BusinessRule {
 		this.entity = entity;
 	}
 	
-	public void setTriggerEvent(TriggerEvent event){
-		triggerEvent = event;
+	public void setEvent(Event event){
+		this.event = event;
 	}
 	
-	public TriggerEvent getTriggerEvent(){
-		return triggerEvent;
+	public Event getEvent(){
+		return event;
 	}
+
+	public Failure getFailure() {
+		return failure;
+	}
+
+	public void setFailure(Failure failure) {
+		this.failure = failure;
+	}
+	
+	
 
 }

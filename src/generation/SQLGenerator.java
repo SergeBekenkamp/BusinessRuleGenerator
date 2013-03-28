@@ -10,7 +10,7 @@ import domain.ConditionalValue;
 
 public class SQLGenerator implements IGenerator {
 
-	private FileIterator fileIterator;
+	private TemplateLoader fileIterator;
 	private Map<String, String> replacers = new HashMap<String, String>();
 	private SQLOutput output = new SQLOutput();
 
@@ -19,7 +19,7 @@ public class SQLGenerator implements IGenerator {
 			throws GenerationException {
 		for (BusinessRule b : businessRules) {
 				replacers = setReplacers(b);
-				fileIterator = new FileIterator("SQLTemplate\\" + b.getBusinessRuleType().getCode() + ".txt");
+				fileIterator = new TemplateLoader("SQLTemplate\\" + b.getBusinessRuleType().getCode() + ".txt");
 				String s = "";
 				while (s != null) {
 					s = fileIterator.nextLine();
