@@ -15,32 +15,29 @@ public class SQLGenerator implements IGenerator {
 	private SQLOutput output = new SQLOutput();
 
 	@Override
-	public void generate(ArrayList<BusinessRule> businessRules)
-			throws GenerationException {
+	public void generate(ArrayList<BusinessRule> businessRules) {
 		for (BusinessRule b : businessRules) {
-				replacers = setReplacers(b);
-				fileIterator = new TemplateLoader("SQLTemplate\\" + b.getBusinessRuleType().getCode() + ".txt");
-				String s = "";
-				while (s != null) {
-					s = fileIterator.nextLine();
-					if (s != null) {
-						for (Map.Entry<String, String> entry : replacers
-								.entrySet()) {
-							s = s.replaceAll(entry.getKey(), entry.getValue());
-						}
-						output.addString(s);
+			replacers = setReplacers(b);
+			fileIterator = new TemplateLoader("SQLTemplate\\" + b.getBusinessRuleType().getCode() + ".txt");
+			String s = "";
+			while (s != null) {
+				s = fileIterator.nextLine();
+				if (s != null) {
+					for (Map.Entry<String, String> entry : replacers.entrySet()) {
+						s = s.replaceAll(entry.getKey(), entry.getValue());
 					}
+					output.addString(s);
 				}
-				output.saveOutput(b.getName());
-				fileIterator.close();
+			}
+			output.saveOutput(b.getName());
+			fileIterator.close();
 		}
 	}
 
 	private Map<String, String> setReplacers(BusinessRule br) {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("<<trigger_name>>", br.getBusinessRuleType().getCode() + "_" + br.getName() + "_TRIGGER");
-		map.put("<<trigger_event>>", br.getTriggerEvent()
-				.getTriggerActivation());
+		map.put("<<trigger_event>>", br.getEvent().toString());
 		map.put("<<column_name>>", br.getAttribute().getColumnName());
 		map.put("<<entity_name>>", br.getAttribute().getEntity().getTableName());
 
@@ -78,23 +75,26 @@ public class SQLGenerator implements IGenerator {
 			break;
 		}
 		map.put("<<operator>>", operator);
-		
+
 		String multiValues = "";
 		String comma = "";
 		int valueNumber = 1;
 		for (ConditionalValue cv : br.getConditionalValues()) {
 			if (cv.getAttribute() != null) {
 				map.put("<<column2_name>>", cv.getAttribute().getColumnName());
-			}
-			else {
-				if (valueNumber != 1) { comma = ", ";} else { comma = ""; }
+			} else {
+				if (valueNumber != 1) {
+					comma = ", ";
+				} else {
+					comma = "";
+				}
 				multiValues += comma + "'" + cv.getValue() + "'";
 				map.put("<<value" + valueNumber + ">>", cv.getValue());
 				valueNumber++;
 			}
 		}
 		map.put("<<multiple_values>>", multiValues);
-			
+
 		return map;
 	}
 }

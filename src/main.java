@@ -1,7 +1,9 @@
-import generation.GenerationException;
 import generation.SQLGenerator;
 
+import java.io.IOException;
 import java.util.ArrayList;
+
+import output.OutputFactory;
 
 import domain.Attribute;
 import domain.BusinessRule;
@@ -16,11 +18,19 @@ import domain.Operator;
 public class main {
 
 	public static void main(String[] args0) {
+		OutputFactory f = new OutputFactory();
+		try {
+			System.out.println(f.getOutputTypes());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 		System.out.println(System.getProperty("user.dir"));
-		
+
 		// Attribute Range Rule
 		Operator oRange = new Operator("Between", 2);
-		Event teRange = new Event(true,false,true);
+		Event teRange = new Event(true, false, true);
 		Entity entRange = new Entity("SPRUIJT");
 		Attribute attRange = new Attribute("been", "varchar2");
 		attRange.setEntity(entRange);
@@ -32,10 +42,10 @@ public class main {
 		BusinessRule rangeRule = new BusinessRule("AttributeRangeRule", oRange, teRange, entRange, attRange, brtRange, new Failure("", ""));
 		rangeRule.addConditionalValue(cv1Range);
 		rangeRule.addConditionalValue(cv2Range);
-		
+
 		// Attribute Compare Rule
 		Operator oCompare = new Operator("Equals", 1);
-		Event teCompare = new Event(true,false,true);
+		Event teCompare = new Event(true, false, true);
 		Entity entCompare = new Entity("Stok");
 		Attribute attCompare = new Attribute("lengte", "int");
 		attCompare.setEntity(entCompare);
@@ -45,10 +55,10 @@ public class main {
 
 		BusinessRule compareRule = new BusinessRule("Attributecomparerule", oCompare, teCompare, entCompare, attCompare, brtCompare, new Failure("", ""));
 		compareRule.addConditionalValue(cvCompare);
-		
+
 		// Attribute List Rule
 		Operator oList = new Operator("NotIn", 1);
-		Event teList = new Event(true,false,true);
+		Event teList = new Event(true, false, true);
 		Entity entList = new Entity("Persoon");
 		Attribute attList = new Attribute("naam", "String");
 		attList.setEntity(entList);
@@ -62,10 +72,10 @@ public class main {
 		listRule.addConditionalValue(cv1List);
 		listRule.addConditionalValue(cv2List);
 		listRule.addConditionalValue(cv3List);
-		
+
 		// Tuple Compare Rule
 		Operator oTupleComp = new Operator("Equals", 1);
-		Event teTupleComp =  new Event(true,false,true);
+		Event teTupleComp = new Event(true, false, true);
 		Entity entTupleComp = new Entity("Persoon");
 		Attribute attTupleComp = new Attribute("naam", "String");
 		attTupleComp.setEntity(entTupleComp);
@@ -75,20 +85,17 @@ public class main {
 		ConditionalValue cvTupleComp = new ConditionalValue("Persoon.achternaam", attTupleComp2, cvtTupleComp);
 		BusinessRuleType brtTupleComp = new BusinessRuleType("TCMP", "list", "description", "example");
 
-		BusinessRule tupleCompRule = new BusinessRule("TupleCompareRule", oTupleComp, teTupleComp, entTupleComp, attTupleComp, brtTupleComp, new Failure("", ""));
+		BusinessRule tupleCompRule = new BusinessRule("TupleCompareRule", oTupleComp, teTupleComp, entTupleComp, attTupleComp, brtTupleComp,
+				new Failure("", ""));
 		tupleCompRule.addConditionalValue(cvTupleComp);
-		
+
 		SQLGenerator gen = new SQLGenerator();
 		ArrayList<BusinessRule> brl = new ArrayList<BusinessRule>();
 		brl.add(rangeRule);
 		brl.add(compareRule);
 		brl.add(listRule);
 		brl.add(tupleCompRule);
-		
-		try {
-			gen.generate(brl);
-		} catch (GenerationException e) {
-			System.out.println(e);
-		}
+		gen.generate(brl);
+
 	}
 }

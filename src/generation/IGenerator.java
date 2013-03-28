@@ -5,6 +5,6 @@ import domain.BusinessRule;
 
 public interface IGenerator {
 	
-	public void generate(ArrayList<BusinessRule> businessRules) throws GenerationException;
+	public void generate(ArrayList<BusinessRule> businessRules);
 
 }
