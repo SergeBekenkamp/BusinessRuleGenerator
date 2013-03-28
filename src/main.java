@@ -3,6 +3,7 @@ import generation.SQLGenerator;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import output.IOutput;
 import output.OutputFactory;
 
 import domain.Attribute;
@@ -25,6 +26,18 @@ public class main {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		try {
+			IOutput ios = f.createOutput("SQLOutput");
+			
+			ios.addString("Dit is een test");
+			ios.addString("dit is test 2");
+			ios.saveOutput("F:\\test.txt");
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
 
 		System.out.println(System.getProperty("user.dir"));
 
