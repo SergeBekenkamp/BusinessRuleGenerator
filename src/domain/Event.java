@@ -1,10 +1,9 @@
 package domain;
 
 public class Event {
-	boolean update,delete,insert;
+	boolean update, delete, insert;
 	private int i = 0;
 
-	
 	public Event(boolean update, boolean delete, boolean insert) {
 		this.update = update;
 		this.delete = delete;
@@ -34,16 +33,26 @@ public class Event {
 	protected void setInsert(boolean insert) {
 		this.insert = insert;
 	}
-	
-	public String toString(){
+
+	public String toString() {
 		String s = "";
-		if(update) s+="Update";
-		if(delete && update) s+= " OR delete";
-		else s+= "delete";
-		if(!update && !delete && insert) s+= "insert";
-		else s+= " OR insert";
+		if (update) {
+			s += "update";
+		}
+
+		if (delete && update) {
+			s += " OR delete";
+		}
+		else if (delete) {
+			s += "delete";
+		}
+		if((update || delete) && insert){
+			s += " OR insert";
+		} else if (insert){
+			s+="insert";
+		}
+
 		return s;
 	}
-	
 
 }
