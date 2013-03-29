@@ -13,8 +13,9 @@ public class BusinessRule {
 	private Event event;
 	private Failure failure;
 	
-	public BusinessRule() {
-		
+	public BusinessRule(int id, String name) {
+		this.id = id;
+		this.name = name;
 	}
 
 	public BusinessRule(String name, Operator operator, Event trigger, Entity entity, Attribute att, BusinessRuleType brt, Failure failure) {

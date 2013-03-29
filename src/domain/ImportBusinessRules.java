@@ -20,10 +20,7 @@ public class ImportBusinessRules {
 		ResultSet rs = dbConn.doQuery("SELECT businessrule_id, name FROM businessrule");
 		try {
 			while (rs.next()) {
-	            BusinessRule br = new BusinessRule();
-	            br.setId(rs.getInt("businessrule_id"));
-	            br.setName(rs.getString("name"));
-	            
+	            BusinessRule br = new BusinessRule(rs.getInt("businessrule_id"), rs.getString("name"));
 	            list.add(br);
 	        }
 	    } catch (SQLException e) { System.err.println(e); }
