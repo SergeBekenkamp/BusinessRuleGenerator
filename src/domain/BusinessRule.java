@@ -17,8 +17,7 @@ public class BusinessRule {
 		
 	}
 
-	public BusinessRule(int id, String name, Operator operator, Event trigger, Entity entity, Attribute att, BusinessRuleType brt, Failure failure) {
-		this.id = id;
+	public BusinessRule(String name, Operator operator, Event trigger, Entity entity, Attribute att, BusinessRuleType brt, Failure failure) {
 		this.name = name;
 		this.operator = operator;
 		this.event = trigger;
