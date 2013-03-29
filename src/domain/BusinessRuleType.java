@@ -9,6 +9,11 @@ public class BusinessRuleType {
 	private String example;
 	private Category category;
 	private ArrayList<Operator> operators = new ArrayList<Operator>();
+	
+	public BusinessRuleType(String code, String name) {
+		this.code = code;
+		this.name = name;
+	}
 
 	public BusinessRuleType(String code, String name, String description,
 			String example) {
