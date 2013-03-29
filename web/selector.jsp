@@ -23,6 +23,7 @@ ArrayList<String> ruletypes = (ArrayList<String>) request.getAttribute("ruletype
 		<a href="?brt=<% out.print(code); %>"><% out.print(name); %></a><br />
 	<% } %>
 </div>
+
 <div id="selection">
 	<form action="generator" method="post">
 	<% for(String s : rules) {
@@ -31,8 +32,10 @@ ArrayList<String> ruletypes = (ArrayList<String>) request.getAttribute("ruletype
 		String name = parts[1]; %>
 		<input type="checkbox" id="rules" value="<% out.print(id); %>" /> <% out.print(name); %><br />
 	<% } %>
+	<input type="submit" name="generate" value="Generate" />
 	</form>
 </div>
+
 <div id="ruleinfo">
 
 </div>
