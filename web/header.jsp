@@ -8,10 +8,4 @@
 <title>Insert title here</title>
 </head>
 <body>
-
 <div id="container">
-Hello
-</div>
-
-</body>
-</html>

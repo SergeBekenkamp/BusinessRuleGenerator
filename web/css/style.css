@@ -1,0 +1,13 @@
+div#container {
+	margin: 0 auto;
+	width: 750px;
+	height: 600px;
+	border: 1px solid #000000;
+}
+
+div#filters {
+	float: left;
+	width: 150px;
+	height: 600px;
+	border-right: 1px solid #000000;
+}
