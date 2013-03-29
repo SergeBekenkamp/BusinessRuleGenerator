@@ -17,8 +17,8 @@ public class DatabaseConnection {
                       // Get a Connection to the database
                       String url = "jdbc:oracle:thin:@ondora01.hu.nl:8521:cursus01";
                       
-                      String username = "THO5_2012_2A_TEAM4";
-                      String password = "THO5_2012_2A_TEAM4";
+                      String username = "THO7_2012_2A_TEAM5";
+                      String password = "THO7_2012_2A_TEAM5";
                       
                       con = DriverManager.getConnection(url, username, password);
                 } catch(ClassNotFoundException e) { 

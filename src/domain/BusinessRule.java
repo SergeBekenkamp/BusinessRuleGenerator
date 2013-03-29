@@ -3,6 +3,7 @@ package domain;
 import java.util.ArrayList;
 
 public class BusinessRule {
+	private int id;
 	private String name;
 	private BusinessRuleType businessRuleType;
 	private Operator operator;
@@ -11,8 +12,13 @@ public class BusinessRule {
 	private ArrayList<ConditionalValue> conditionalValues = new ArrayList<ConditionalValue>();
 	private Event event;
 	private Failure failure;
+	
+	public BusinessRule() {
+		
+	}
 
-	public BusinessRule(String name, Operator operator, Event trigger, Entity entity, Attribute att, BusinessRuleType brt, Failure failure) {
+	public BusinessRule(int id, String name, Operator operator, Event trigger, Entity entity, Attribute att, BusinessRuleType brt, Failure failure) {
+		this.id = id;
 		this.name = name;
 		this.operator = operator;
 		this.event = trigger;
@@ -20,6 +26,14 @@ public class BusinessRule {
 		this.attribute = att;
 		this.businessRuleType = brt;
 		this.failure = failure;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public boolean addConditionalValue(ConditionalValue value) {
