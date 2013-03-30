@@ -102,7 +102,6 @@ public class main {
 				new Failure("", ""));
 		tupleCompRule.addConditionalValue(cvTupleComp);
 
-		SQLGenerator gen = new SQLGenerator();
 		ArrayList<BusinessRule> brl = new ArrayList<BusinessRule>();
 		brl.add(rangeRule);
 		brl.add(compareRule);

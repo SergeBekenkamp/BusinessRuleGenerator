@@ -9,20 +9,18 @@ import java.util.List;
 
 public class OutputFactory {
 
-	public OutputFactory() {
 
-	}
 
-	public IOutput createOutput(String outputType) throws ClassNotFoundException, InstantiationException, IllegalAccessException {
+	public static IOutput createOutput(String outputType) throws ClassNotFoundException, InstantiationException, IllegalAccessException {
 		Class<?> c = Class.forName("output." + outputType);
 		return (IOutput) c.newInstance();
 	}
 
-	public List<String> getOutputTypes() throws IOException {
+	public static List<String> getOutputTypes() throws IOException {
 		return getPackageContent("output");
 	}
 
-	private List<String> getPackageContent(String packageName) throws IOException {
+	private static List<String> getPackageContent(String packageName) throws IOException {
 		ArrayList<String> classes = new ArrayList<String>();
 		Enumeration<URL> urls = Thread.currentThread().getContextClassLoader().getResources(packageName);
 		while (urls.hasMoreElements()) {
