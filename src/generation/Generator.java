@@ -19,7 +19,7 @@ public class Generator {
 
 
 	public Generator(Language language, List<BusinessRule> businessRules, String outputType, String outputData) {
-		this.selectedLanguage = selectedLanguage;
+		this.selectedLanguage = language;
 		this.businessRules = businessRules;
 		this.outputType = outputType;
 		this.outputData = outputData;
