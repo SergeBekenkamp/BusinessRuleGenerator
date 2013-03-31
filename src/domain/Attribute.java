@@ -1,8 +1,8 @@
 package domain;
 
 public class Attribute {
+	
 	private String columnName;
-
 	private String dataType;
 	private Entity entity;
 	private ConditionalValue conditionalValue;
@@ -43,5 +43,6 @@ public class Attribute {
 	public void setConditionalValue(ConditionalValue conditionalValue) {
 		this.conditionalValue = conditionalValue;
 	}
+	
 
 }

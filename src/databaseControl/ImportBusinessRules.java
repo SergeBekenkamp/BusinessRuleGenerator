@@ -15,21 +15,25 @@ public class ImportBusinessRules {
 		dbConn = new DatabaseConnection();
 	}
 	
-	public BusinessRule getBusinessRule(Integer businessRuleId){
+	public BusinessRule getBusinessRule(int businessRuleId){
+		System.out.println("BusinessRuleID: " + businessRuleId);
 		dbConn.connect();
-		ResultSet rs = dbConn.doQuery("SELECT * FROM BusinessRule WHERE businessrule_id = " + businessRuleId 
-				+ " INNER JOIN BusinessRuleType ON BusinessRule.businessruletype_code = BusinessRuleType.code"
-				+ " INNER JOIN Failure ON BusinessRule.failure_id = Failure.failure_id"
-				+ " INNER JOIN Attribute ON BusinessRule.attribute_id = Attribute.attribute_id");
+		
+		ResultSet rs = dbConn.doQuery("SELECT * FROM BusinessRule WHERE businessrule_id = " + businessRuleId);
 		BusinessRule br = null;
 		try {
 			while(rs.next()){	
-				Attribute attr = new Attribute(rs.getString("Attribute.name"), rs.getString("Attribute.datatyoe"));
-				BusinessRuleType brType = new BusinessRuleType(rs.getString("BusinessRuleType.code"), rs.getString("BusinessRuleType.name"), 
-						rs.getString("BusinessRuleType.description"), rs.getString("BusinessRuleType.example"));
-				Failure failure = new Failure(rs.getString("Failure.severity"), rs.getString("Failure.message"));
-				br = new BusinessRule(rs.getString("BusinessRule.name"), getOperator(businessRuleId), getEvent(businessRuleId), 
-						getEntity(businessRuleId), attr, brType, failure);
+				Attribute attr = getAttribute(rs.getInt("attribute_id"));
+				attr.setEntity(getEntity(rs.getInt("attribute_id")));
+				BusinessRuleType brType = getBusinessRuleType(rs.getString("BUSINESSRULETYPE_CODE"));
+				int failureid = rs.getInt("FAILURE_ID");
+				Failure failure = null;
+				if(failureid != 0){
+					failure = getFailure(failureid);
+				}
+				
+				br = new BusinessRule(rs.getString("name"), getOperator(businessRuleId), getEvent(businessRuleId), 
+						getEntity(rs.getInt("attribute_id")), attr, brType, failure);
 				br.setName(rs.getString("name"));
 				//TODO: fill more data			
 			}
@@ -40,21 +44,71 @@ public class ImportBusinessRules {
 		return br;
 	}
 	
-	public Event getEvent(Integer businessRuleId) {
-		ResultSet rs = dbConn.doQuery("SELECT * FROM Event WHERE businessrule_id = " + businessRuleId);
+	public Failure getFailure(int failureID){
+		Failure f = null;
+		ResultSet rs = dbConn.doQuery("SELECT * FROM failure WHERE failure_id = " + failureID );
+		try {
+			while(rs.next()){	
+			f = new Failure(rs.getString("severity"), rs.getString("message"));
+						
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return f;
+	}
+	
+	public BusinessRuleType getBusinessRuleType(String code){
+		BusinessRuleType type = null;
+		
+		ResultSet rs = dbConn.doQuery("SELECT * FROM BusinessRuleType WHERE code = '" + code + "'");
+		try {
+			while(rs.next()){	
+			type = 	new BusinessRuleType(rs.getString("code"),rs.getString("name"), rs.getString("description"), rs.getString("example"));
+						
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return type;
+	}
+	
+	public Attribute getAttribute(int attributeId){
+		Attribute attr = null;
+		ResultSet rs = dbConn.doQuery("SELECT * FROM attribute WHERE attribute_id = " + attributeId);
+		try {
+			while(rs.next()){	
+				attr = new Attribute(rs.getString("name"), rs.getString("datatype"));
+			}
+		} catch(SQLException e){
+			e.printStackTrace();
+		}
+		return attr;
+	}
+	
+	public Event getEvent(int businessRuleId) {
+		ResultSet rs = dbConn.doQuery("select * from triggerevent where businessrule_id = " + businessRuleId);
 		Event event = null;
 		try {
-			while(rs.next()){				
-				event = new Event(rs.getBoolean("update"), rs.getBoolean("delete"), rs.getBoolean("insert"));
+			while(rs.next()){
+				event = new Event(toBoolean(rs.getString("update")), toBoolean(rs.getString("delete")), toBoolean(rs.getString("insert")));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return event;
 	}
+	public boolean toBoolean(String booleanfy){
+		if(booleanfy.equals("Y")){
+			return true;
+		} else {
+			return false;
+		}
+	}
 
-	public Operator getOperator(Integer businessRuleId){
-		ResultSet rs = dbConn.doQuery("SELECT * FROM Attribute WHERE businessrule_id = " + businessRuleId);
+	public Operator getOperator(int operatorID){
+		ResultSet rs = dbConn.doQuery("SELECT * FROM operator WHERE OPERATOR_ID = " + operatorID);
 		Operator opr = null;
 		try {
 			while(rs.next()){				
@@ -66,12 +120,12 @@ public class ImportBusinessRules {
 		return opr;
 	}
 	
-	public Entity getEntity(Integer businessRuleId){
-		ResultSet rs = dbConn.doQuery("SELECT * FROM Attribute WHERE businessrule_id = " + businessRuleId);
+	public Entity getEntity(int attributeid){
+		ResultSet rs = dbConn.doQuery("select * from entity where entity_id = (select entity_id from attribute where attribute_id =" + attributeid + ")");
 		Entity entity = null;
 		try {
 			while(rs.next()){				
-				entity = new Entity (rs.getString("name"));
+				entity = new Entity (rs.getString("NAME"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

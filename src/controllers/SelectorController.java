@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import output.OutputFactory;
+
 import domain.BusinessRule;
 import domain.BusinessRuleType;
 import domain.Category;
@@ -21,7 +23,7 @@ public class SelectorController extends HttpServlet {
 		ImportBusinessRules ibr = new ImportBusinessRules();
 		
 		// get all businessrules id + name
-		ArrayList<String> rules = new ArrayList();
+		ArrayList<String> rules = new ArrayList<>();
 		for (BusinessRule br : ibr.getAllBusinessRules()) {
 			String s = br.getId() + "," + br.getName();
 			rules.add(s);
@@ -29,7 +31,7 @@ public class SelectorController extends HttpServlet {
 		request.setAttribute("rules", rules);
 		
 		// get all categories id + name
-		ArrayList<String> categories = new ArrayList();
+		ArrayList<String> categories = new ArrayList<>();
 		for (Category cat : ibr.getCategories()) {
 			String s = cat.getId() + "," + cat.getName();
 			categories.add(s);
@@ -37,12 +39,14 @@ public class SelectorController extends HttpServlet {
 		request.setAttribute("categories", categories);
 		
 		// get all businessruletypes code + name
-		ArrayList<String> ruletypes = new ArrayList();
+		ArrayList<String> ruletypes = new ArrayList<>();
 		for (BusinessRuleType brt : ibr.getBusinessRuleTypes()) {
 			String s = brt.getCode() + "," + brt.getName();
 			ruletypes.add(s);
 		}
 		request.setAttribute("ruletypes", ruletypes);
+		
+		request.setAttribute("generateOptions", OutputFactory.getOutputTypes());
 		
 		RequestDispatcher rd = request.getRequestDispatcher("selector.jsp");
         rd.forward(request, response);

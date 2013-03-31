@@ -48,6 +48,7 @@ public class Generator {
 
 	private Map<String, String> setReplacers(BusinessRule br) {
 		Map<String, String> map = new HashMap<String, String>();
+		System.out.println("Attribute: " + br.getEntity().getTableName());
 		map.put("<<trigger_name>>", br.getBusinessRuleType().getCode() + "_" + br.getName() + "_TRIGGER");
 		map.put("<<trigger_event>>", br.getEvent().toString());
 		map.put("<<column_name>>", br.getAttribute().getColumnName());

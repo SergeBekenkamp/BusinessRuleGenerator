@@ -5,24 +5,8 @@ ArrayList<String> rules = (ArrayList<String>) request.getAttribute("rules");
 ArrayList<String> categories = (ArrayList<String>) request.getAttribute("categories");
 ArrayList<String> entities = (ArrayList<String>) request.getAttribute("entities");
 ArrayList<String> ruletypes = (ArrayList<String>) request.getAttribute("ruletypes");
+ArrayList<String> generateOptions = (ArrayList<String>) request.getAttribute("generateOptions");
 %>
-<div id="filters">
-	<h1>Filter</h1>
-	<h2>Categories</h2>
-	<% for(String s : categories) {
-		String[] parts = s.split(",");
-		String id = parts[0];
-		String name = parts[1]; %>
-		<a href="?cat=<% out.print(id); %>"><% out.print(name); %></a><br />
-	<% } %>
-	<h2>BusinessRuleTypes</h2>
-	<% for(String s : ruletypes) {
-		String[] parts = s.split(",");
-		String code = parts[0];
-		String name = parts[1]; %>
-		<a href="?brt=<% out.print(code); %>"><% out.print(name); %></a><br />
-	<% } %>
-</div>
 <script language="JavaScript">
 
 function checkAll(chkboxName) {
@@ -39,8 +23,34 @@ function uncheckAll(chkboxName) {
 	  }
 }
 </script>
+<form name="selector" action="generator" method="post">
+<div id="filters">
+	<h1>Filter</h1>
+	<h2>Generate Options</h2>
+	<select name="generateOptions">
+	<%for (String s : generateOptions){ %>
+		<option value="<%out.print(s);%>"><%out.print(s);%></option>	
+	<%} %>
+	
+	</select>
+	<% %>
+	<h2>Categories</h2>
+	<% for(String s : categories) {
+		String[] parts = s.split(",");
+		String id = parts[0];
+		String name = parts[1]; %>
+		<a href="?cat=<% out.print(id); %>"><% out.print(name); %></a><br />
+	<% } %>
+	<h2>BusinessRuleTypes</h2>
+	<% for(String s : ruletypes) {
+		String[] parts = s.split(",");
+		String code = parts[0];
+		String name = parts[1]; %>
+		<a href="?brt=<% out.print(code); %>"><% out.print(name); %></a><br />
+	<% } %>
+</div>
 <div id="selection">
-	<form name="selector" action="generator" method="post">
+	
 		<input type="button" value="Select all" onClick="checkAll('businessRules')" />
 		<input type="button" value="Select none" onClick="uncheckAll('businessRules')" />
 		<div id="businessrules">
@@ -52,8 +62,8 @@ function uncheckAll(chkboxName) {
 			<% } %>
 		</div>
 		<input type="submit" name="generate" value="Generate" />
-	</form>
 </div>
+</form>
 
 <div id="ruleinfo">
 
