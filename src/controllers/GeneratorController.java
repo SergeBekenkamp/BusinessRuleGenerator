@@ -38,7 +38,8 @@ public class GeneratorController extends HttpServlet {
 			selectedBusinessRules.add(ibr.getBusinessRule(Integer.parseInt(businessRule)));
 		}
 		ArrayList<Language> selectedLanguages = new ArrayList<Language>();
-		Generator gen = new Generator(new Language("test", "test"), selectedBusinessRules, outputType, "F:\\");
+		System.out.println(this.getServletContext().getRealPath("templates"));
+		Generator gen = new Generator(new Language("test", "test"), selectedBusinessRules, outputType, this.getServletContext().getRealPath("templates"));
 
 		try {
 			gen.generate();

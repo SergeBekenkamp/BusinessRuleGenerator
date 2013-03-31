@@ -1,12 +1,18 @@
 package generation;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.GenericServlet;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+
 import output.IOutput;
 import output.OutputFactory;
-
 import domain.BusinessRule;
 import domain.ConditionalValue;
 
@@ -15,20 +21,22 @@ public class Generator {
 	private List<BusinessRule> businessRules;
 	private Map<String, String> replacers = new HashMap<String, String>();
 	String outputType;
-	String outputData;
+	String outputLocation;
 
-	public Generator(Language language, List<BusinessRule> businessRules, String outputType, String outputData) {
+	
+
+	public Generator(Language language, List<BusinessRule> businessRules, String outputType, String dataLocation) {
 		this.selectedLanguage = language;
 		this.businessRules = businessRules;
 		this.outputType = outputType;
-		this.outputData = outputData;
+		this.outputLocation = dataLocation;
 	}
 
 	public void generate() throws ClassNotFoundException, InstantiationException, IllegalAccessException {
 		IOutput output = OutputFactory.createOutput(outputType);
 		for (BusinessRule b : businessRules) {
 			replacers = setReplacers(b);
-			TemplateLoader fileIterator = new TemplateLoader("SQLTemplate\\" + b.getBusinessRuleType().getCode() + ".txt");
+			TemplateLoader fileIterator = new TemplateLoader(outputLocation + "\\" +outputType + "\\" + b.getBusinessRuleType().getCode() + ".txt");
 			String s = "";
 			while (s != null) {
 				s = fileIterator.nextLine();
@@ -39,7 +47,7 @@ public class Generator {
 					output.addString(s);
 				}
 			}
-			output.saveOutput("f:\\test");
+			output.saveOutput(outputLocation + "\\" + output);
 			fileIterator.close();
 		}
 
