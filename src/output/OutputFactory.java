@@ -21,7 +21,10 @@ public class OutputFactory {
 	}
 
 	private static List<String> getPackageContent(String packageName) throws IOException {
+		
 		ArrayList<String> classes = new ArrayList<String>();
+		classes.add("SQLOutput");
+		/*
 		Enumeration<URL> urls = Thread.currentThread().getContextClassLoader().getResources(packageName);
 		while (urls.hasMoreElements()) {
 			URL url = urls.nextElement();
@@ -33,6 +36,7 @@ public class OutputFactory {
 				}
 			}
 		}
+		*/
 		return classes;
 	}
 
