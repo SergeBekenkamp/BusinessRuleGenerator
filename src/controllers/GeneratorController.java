@@ -2,8 +2,12 @@ package controllers;
 
 import generation.Generator;
 import generation.Language;
+import generation.TemplateLoader;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
@@ -18,6 +22,7 @@ import domain.BusinessRule;
 public class GeneratorController extends HttpServlet {
 
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setAttribute("output", getGeneratedCode());
 		RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
 		rd.forward(request, response);
 	}
@@ -49,5 +54,17 @@ public class GeneratorController extends HttpServlet {
 		}
 
 		processRequest(request, response);
+	}
+	
+	protected String getGeneratedCode(){
+		TemplateLoader tl = new TemplateLoader(this.getServletContext().getRealPath("templates") + "\\output.txt");
+		String s = "", s2 = "";
+		while (s2 != null) {
+		s2 = tl.nextLine();
+		s += s2;
+		}
+		tl.close();
+		return s;
+		
 	}
 }

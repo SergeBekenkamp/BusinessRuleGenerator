@@ -9,7 +9,7 @@
 <body>
 
 <div id="container">
-
+<% out.print(request.getAttribute("output")); %>
 </div>
 
 </body>
