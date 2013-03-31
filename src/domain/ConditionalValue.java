@@ -13,10 +13,10 @@ public class ConditionalValue {
 		this.type = type;
 	}
 	
-	public ConditionalValue(String name, String value, ConditionalValueType type){
+	public ConditionalValue(String name,Attribute attribute, String value){
 		this.name = name;
 		this.value = value;
-		this.type = type;
+		this.attribute = attribute;
 	}
 	
 	public String getName() {

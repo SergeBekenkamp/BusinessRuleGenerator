@@ -11,6 +11,7 @@ public class SQLOutput implements IOutput {
 
 	@Override
 	public void addString(String output) {
+		System.out.println(output);
 		sb.append(output + "\n");
 	}
 

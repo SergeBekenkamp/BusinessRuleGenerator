@@ -32,6 +32,7 @@ public class main {
 
 		System.out.println(System.getProperty("user.dir"));
 
+		/*
 		// Attribute Range Rule
 		Operator oRange = new Operator("Between", 2);
 		Event teRange = new Event(true, false, true);
@@ -99,5 +100,7 @@ public class main {
 		brl.add(listRule);
 		brl.add(tupleCompRule);
 		//gen.generate(brl);
+		 * 
+		 */
 	}
 }

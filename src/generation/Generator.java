@@ -40,7 +40,7 @@ public class Generator {
 					output.addString(s);
 				}
 			}
-			output.saveOutput(outputData);
+			output.saveOutput("f:\\test");
 			fileIterator.close();
 		}
 
@@ -54,8 +54,8 @@ public class Generator {
 		map.put("<<column_name>>", br.getAttribute().getColumnName());
 		map.put("<<entity_name>>", br.getAttribute().getEntity().getTableName());
 		
-		String operator = selectedLanguage.getElement(br.getOperator().getName());
-		map.put("<<operator>>", operator);
+		//String operator = selectedLanguage.getElement(br.getOperator().getName());
+		map.put("<<operator>>", "test");
 
 		String multiValues = "";
 		String comma = "";
@@ -76,7 +76,6 @@ public class Generator {
 		}
 		
 		map.put("<<multiple_values>>", multiValues);
-
 		return map;
 	}
 }
