@@ -47,9 +47,10 @@ public class Generator {
 					output.addString(s);
 				}
 			}
-			output.saveOutput(outputLocation + "\\output");
+			
 			fileIterator.close();
 		}
+		output.saveOutput(outputLocation + "\\output");
 
 	}
 
