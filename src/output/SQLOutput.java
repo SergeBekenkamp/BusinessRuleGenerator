@@ -19,7 +19,7 @@ public class SQLOutput implements IOutput {
 	public boolean saveOutput(String fileName) {
 		File file = new File(fileName);
 		try {
-		BufferedWriter writer = new BufferedWriter(new FileWriter(file + ".txt"));
+		BufferedWriter writer = new BufferedWriter(new FileWriter(file + ".txt", true));
 		writer.write(sb.toString());
 		writer.close();
 		} catch (IOException e){
