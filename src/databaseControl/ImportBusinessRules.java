@@ -16,6 +16,7 @@ public class ImportBusinessRules {
 	}
 	
 	public BusinessRule getBusinessRule(Integer businessRuleId){
+		dbConn.connect();
 		ResultSet rs = dbConn.doQuery("SELECT * FROM BusinessRule WHERE businessrule_id = " + businessRuleId 
 				+ " INNER JOIN BusinessRuleType ON BusinessRule.businessruletype_code = BusinessRuleType.code"
 				+ " INNER JOIN Failure ON BusinessRule.failure_id = Failure.failure_id"
@@ -35,6 +36,7 @@ public class ImportBusinessRules {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		dbConn.closeConnection();
 		return br;
 	}
 	

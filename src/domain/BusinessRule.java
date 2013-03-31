@@ -108,6 +108,22 @@ public class BusinessRule {
 		this.failure = failure;
 	}
 	
+	public String toString(){
+		String s = "";
+		s += "BusinessRule: " + name + "\n";
+		s += "BusinessRuleType: " + businessRuleType.getName() + "\n";
+		s += "Operator: " + operator.getName() + "\n";
+		s += "Entity: " + entity.getTableName();
+		s += "Attribute: " + attribute.getColumnName() + " Datatype: " + attribute.getDataType() + "\n";
+		for(ConditionalValue v : conditionalValues){
+			s+= "ConditionalValue: " + v.getName() + " Value: " +  v.getValue() + "\n";
+		}
+		s += "Event: " + event.toString() + "\n";
+		s += "Failure: " + failure.getMessage() + " Severity: " + failure.getSeverity();
+		
+		return s;
+	}
+	
 	
 
 }

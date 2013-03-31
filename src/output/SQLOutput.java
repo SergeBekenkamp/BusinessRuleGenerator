@@ -18,7 +18,7 @@ public class SQLOutput implements IOutput {
 	public boolean saveOutput(String fileName) {
 		File file = new File(fileName);
 		try {
-		BufferedWriter writer = new BufferedWriter(new FileWriter(file));
+		BufferedWriter writer = new BufferedWriter(new FileWriter(file, true));
 		writer.write(sb.toString());
 		writer.close();
 		} catch (IOException e){

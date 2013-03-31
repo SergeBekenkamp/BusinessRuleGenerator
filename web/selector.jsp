@@ -23,23 +23,26 @@ ArrayList<String> ruletypes = (ArrayList<String>) request.getAttribute("ruletype
 		<a href="?brt=<% out.print(code); %>"><% out.print(name); %></a><br />
 	<% } %>
 </div>
-<SCRIPT LANGUAGE="JavaScript">
-<!-- 	
-function checkAll(field) {
-for (i = 0; i < field.length; i++)
-	field[i].checked = true ;
-}
+<script language="JavaScript">
 
-function uncheckAll(field) {
-for (i = 0; i < field.length; i++)
-	field[i].checked = false ;
+function checkAll(chkboxName) {
+		  var checkboxes = document.getElementsByName(chkboxName);
+		  for (var i=0; i<checkboxes.length; i++) {
+		     checkboxes[i].checked=true;
+		  }
+		}
+
+function uncheckAll(chkboxName) {
+	var checkboxes = document.getElementsByName(chkboxName);
+	  for (var i=0; i<checkboxes.length; i++) {
+	     checkboxes[i].checked=false;
+	  }
 }
-//-->
 </script>
 <div id="selection">
 	<form name="selector" action="generator" method="post">
-		<input type="button" value="Select all" onClick="checkAll(document.selector.rules)" />
-		<input type="button" value="Select none" onClick="uncheckAll(document.selector.rules)" />
+		<input type="button" value="Select all" onClick="checkAll('businessRules')" />
+		<input type="button" value="Select none" onClick="uncheckAll('businessRules')" />
 		<div id="businessrules">
 			<% for(String s : rules) {
 				String[] parts = s.split(",");
