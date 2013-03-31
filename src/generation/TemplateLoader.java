@@ -10,6 +10,8 @@ public class TemplateLoader {
 	BufferedReader file;
 
 	public TemplateLoader(String file) {
+		System.out.println(System.getProperty("user.dir"));
+		System.out.println(file);
 		try {
 			this.file = new BufferedReader(new FileReader(file));
 		} catch (FileNotFoundException e) {

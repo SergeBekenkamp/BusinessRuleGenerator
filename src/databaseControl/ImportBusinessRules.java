@@ -35,6 +35,7 @@ public class ImportBusinessRules {
 				br = new BusinessRule(rs.getString("name"), getOperator(businessRuleId), getEvent(businessRuleId), getEntity(rs.getInt("attribute_id")), attr,
 						brType, failure);
 				for (ConditionalValue cv : getConditionalValues(businessRuleId)) {
+					System.out.println("Conditional value: " + cv.getName());
 					br.addConditionalValue(cv);
 				}
 			}
