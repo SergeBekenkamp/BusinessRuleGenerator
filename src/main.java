@@ -25,7 +25,7 @@ public class main {
 			e.printStackTrace();
 		}
 		ImportBusinessRules select = new ImportBusinessRules();
-		List<BusinessRule> b = select.getAllBusinessRules();
+		List<BusinessRule> b = select.getAllBusinessRules(0, "");
 		for (BusinessRule br : b) {
 			System.out.println(select.getBusinessRule(br.getId()));
 		}

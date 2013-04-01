@@ -27,7 +27,6 @@ function uncheckAll(chkboxName) {
 </script>
 <form name="selector" action="generator" method="post">
 	<div id="filters">
-		<h1>Filter</h1>
 		<h2>Generate Options</h2>
 		Output: 
 		<select name="output">
@@ -39,6 +38,7 @@ function uncheckAll(chkboxName) {
 		<select name="language">
 			<option value="PLSQL">PLSQL</option>
 		</select><br />
+		<h1>Filter</h1>
 		<h2>Categories</h2>
 		<% for (String s : categories) {
 				String[] parts = s.split(",");
@@ -58,7 +58,7 @@ function uncheckAll(chkboxName) {
 				String[] parts = s.split(",");
 				String id = parts[0];
 				String name = parts[1]; %>
-				<a href="?brt=<% out.print(id); %>"><% out.print(name); %></a><br />
+				<a href="?ent=<% out.print(id); %>"><% out.print(name); %></a><br />
 		<% } %>
 	</div>
 	<div id="selection">

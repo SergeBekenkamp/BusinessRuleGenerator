@@ -21,20 +21,20 @@ public class SelectorController extends HttpServlet {
 
 		ImportBusinessRules ibr = new ImportBusinessRules();
 		
-		String selected = null;
-		
-//		String selected = (String) request.getAttribute("selected");
-//		int category = (int) request.getAttribute("cat");
-//		int ruleType = (int) request.getAttribute("brt");
-//		int entity = (int) request.getAttribute("ent");
+		String selected = this.convertStringParam(request.getParameter("selected"));
+		int category = this.convertIntParam(request.getParameter("cat"));
+		String ruleType = this.convertStringParam(request.getParameter("brt"));
 		
 		
-		if (selected != null){
+		System.out.println("controller: " + category);
+		System.out.println("controller: " + ruleType);
+		
+		if (!selected.equals("")){
 			if (selected.equals("true")) {
 				// get businessrules id + name selected from apex
 				ArrayList<String> rules = new ArrayList<>();
 				
-				for (BusinessRule br : ibr.getSelectedBusinessRules(0, 0)) {
+				for (BusinessRule br : ibr.getSelectedBusinessRules(category, ruleType)) {
 					String s = br.getId() + "," + br.getName();
 					rules.add(s);
 				}
@@ -43,7 +43,7 @@ public class SelectorController extends HttpServlet {
 		} else {
 			// get all businessrules id + name
 			ArrayList<String> rules = new ArrayList<>();
-			for (BusinessRule br : ibr.getAllBusinessRules()) {
+			for (BusinessRule br : ibr.getAllBusinessRules(category, ruleType)) {
 				String s = br.getId() + "," + br.getName();
 				rules.add(s);
 			}
@@ -70,7 +70,7 @@ public class SelectorController extends HttpServlet {
 		ArrayList<String> entities = new ArrayList<>();
 		for (Entity ent : ibr.getEntities()) {
 			String s = ent.getId() + "," + ent.getTableName();
-			ruletypes.add(s);
+			entities.add(s);
 		}
 		request.setAttribute("entities", entities);
 		
@@ -82,6 +82,21 @@ public class SelectorController extends HttpServlet {
 		RequestDispatcher rd = request.getRequestDispatcher("selector.jsp");
 		rd.forward(request, response);
 		
+	}
+	
+	private String convertStringParam(Object o) {
+		String s = "";
+		if (o != null) {
+			s = (String) o;
+		}
+		return s;
+	}
+	private int convertIntParam(Object o) {
+		int i = 0;
+		if (o != null) {
+			i = Integer.parseInt((String) o);
+		}
+		return i;
 	}
 
 	@Override
