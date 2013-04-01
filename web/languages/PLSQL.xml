@@ -8,4 +8,6 @@
 	<GreaterThan>&gt;</GreaterThan>
 	<LessOrEqualTo>&lt;=</LessOrEqualTo>
 	<GreaterOrEqualTo>&gt;=</GreaterOrEqualTo>
+	<In>IN</In>
+	<NotIn>NOT IN</NotIn>
 </PLSQL>

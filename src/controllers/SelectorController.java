@@ -10,24 +10,43 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import output.OutputFactory;
-
+import databaseControl.ImportBusinessRules;
 import domain.BusinessRule;
 import domain.BusinessRuleType;
 import domain.Category;
-import domain.ImportBusinessRules;
+import domain.Entity;
 
 public class SelectorController extends HttpServlet {
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		ImportBusinessRules ibr = new ImportBusinessRules();
-
-		// get all businessrules id + name
-		ArrayList<String> rules = new ArrayList<>();
-		for (BusinessRule br : ibr.getAllBusinessRules()) {
-			String s = br.getId() + "," + br.getName();
-			rules.add(s);
+		
+		String selected = (String) request.getAttribute("selected");
+		int category = (int) request.getAttribute("cat");
+		int ruleType = (int) request.getAttribute("brt");
+		int entity = (int) request.getAttribute("ent");
+		
+		
+		if (selected != null){
+			if (selected.equals("true")) {
+				// get businessrules id + name selected from apex
+				ArrayList<String> rules = new ArrayList<>();
+				
+				for (BusinessRule br : ibr.getSelectedBusinessRules(0, 0)) {
+					String s = br.getId() + "," + br.getName();
+					rules.add(s);
+				}
+				request.setAttribute("rules", rules);
+			}
+		} else {
+			// get all businessrules id + name
+			ArrayList<String> rules = new ArrayList<>();
+			for (BusinessRule br : ibr.getAllBusinessRules()) {
+				String s = br.getId() + "," + br.getName();
+				rules.add(s);
+			}
+			request.setAttribute("rules", rules);
 		}
-		request.setAttribute("rules", rules);
 
 		// get all categories id + name
 		ArrayList<String> categories = new ArrayList<>();
@@ -41,6 +60,14 @@ public class SelectorController extends HttpServlet {
 		ArrayList<String> ruletypes = new ArrayList<>();
 		for (BusinessRuleType brt : ibr.getBusinessRuleTypes()) {
 			String s = brt.getCode() + "," + brt.getName();
+			ruletypes.add(s);
+		}
+		request.setAttribute("ruletypes", ruletypes);
+		
+		// get all entities id + name
+		ArrayList<String> entities = new ArrayList<>();
+		for (Entity ent : ibr.getEntities()) {
+			String s = ent.getId() + "," + ent.getTableName();
 			ruletypes.add(s);
 		}
 		request.setAttribute("ruletypes", ruletypes);

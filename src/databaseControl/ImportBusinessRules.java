@@ -144,14 +144,33 @@ public class ImportBusinessRules {
 		Entity entity = null;
 		try {
 			while (rs.next()) {
-				entity = new Entity(rs.getString("NAME"));
+				entity = new Entity(rs.getInt("ENTITY_ID"), rs.getString("NAME"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return entity;
 	}
+	
+	public List<BusinessRule> getSelectedBusinessRules(int categoryId, int ruleTypeId) {
+		dbConn.connect();
+		List<BusinessRule> list = new ArrayList<BusinessRule>();
+		ResultSet rs = dbConn.doQuery("SELECT businessrule_id, name FROM businessrule");
+		try {
+			while (rs.next()) {
+				BusinessRule br = new BusinessRule(rs.getInt("businessrule_id"), rs.getString("name"));
+				list.add(br);
+			}
+		} catch (SQLException e) {
+			System.err.println(e);
+		}
 
+		dbConn.closeConnection();
+
+		return list;
+		
+	}
+	
 	public List<BusinessRule> getAllBusinessRules() {
 		dbConn.connect();
 		List<BusinessRule> list = new ArrayList<BusinessRule>();
@@ -196,6 +215,24 @@ public class ImportBusinessRules {
 			while (rs.next()) {
 				Category cat = new Category(rs.getInt("category_id"), rs.getString("name"));
 				list.add(cat);
+			}
+		} catch (SQLException e) {
+			System.err.println(e);
+		}
+
+		dbConn.closeConnection();
+
+		return list;
+	}
+	
+	public List<Entity> getEntities() {
+		dbConn.connect();
+		List<Entity> list = new ArrayList<Entity>();
+		ResultSet rs = dbConn.doQuery("SELECT * FROM entity");
+		try {
+			while (rs.next()) {
+				Entity ent = new Entity(rs.getInt("ENTITY_ID"), rs.getString("NAME"));
+				list.add(ent);
 			}
 		} catch (SQLException e) {
 			System.err.println(e);

@@ -53,6 +53,13 @@ function uncheckAll(chkboxName) {
 				String name = parts[1]; %>
 				<a href="?brt=<% out.print(code); %>"><% out.print(name); %></a><br />
 		<% } %>
+		<h2>Entities</h2>
+		<% for (String s : entities) {
+				String[] parts = s.split(",");
+				String id = parts[0];
+				String name = parts[1]; %>
+				<a href="?brt=<% out.print(id); %>"><% out.print(name); %></a><br />
+		<% } %>
 	</div>
 	<div id="selection">
 		<input type="button" value="Select all" onClick="checkAll('businessRules')" />
