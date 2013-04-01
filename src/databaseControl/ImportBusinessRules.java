@@ -32,7 +32,7 @@ public class ImportBusinessRules {
 					failure = getFailure(failureid);
 				}
 
-				br = new BusinessRule(rs.getString("name"), getOperator(businessRuleId), getEvent(businessRuleId), getEntity(rs.getInt("attribute_id")), attr,
+				br = new BusinessRule(rs.getString("name"), getOperator(rs.getInt("OPERATOR_ID")), getEvent(businessRuleId), getEntity(rs.getInt("attribute_id")), attr,
 						brType, failure);
 				for (ConditionalValue cv : getConditionalValues(businessRuleId)) {
 					System.out.println("Conditional value: " + cv.getName());

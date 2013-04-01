@@ -1,16 +1,16 @@
 package generation;
 
 public class LanguageElement {
-	String elementValue;
 	String elementName;
+	String elementValue;
 	
 	public LanguageElement(){
 		
 	}
 	
-	public LanguageElement(String elementValue, String elementName) {
-		this.elementValue = elementValue;
+	public LanguageElement(String elementName, String elementValue) {
 		this.elementName = elementName;
+		this.elementValue = elementValue;
 	}
 	protected String getElementValue() {
 		return elementValue;
@@ -25,6 +25,4 @@ public class LanguageElement {
 		this.elementName = elementName;
 	}
 	
-	
-
 }

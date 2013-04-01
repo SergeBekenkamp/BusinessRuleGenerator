@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PLSQL>
+	<Between>BETWEEN</Between>
+	<NotBetween>NOT BETWEEN</NotBetween>
+	<Equals>=</Equals>
+	<NotEquals>!=</NotEquals>
+	<LessThan>&lt;</LessThan>
+	<GreaterThan>&gt;</GreaterThan>
+	<LessOrEqualTo>&lt;=</LessOrEqualTo>
+	<GreaterOrEqualTo>&gt;=</GreaterOrEqualTo>
+</PLSQL>

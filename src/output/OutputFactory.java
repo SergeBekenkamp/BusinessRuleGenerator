@@ -16,14 +16,14 @@ public class OutputFactory {
 		return (IOutput) c.newInstance();
 	}
 
-	public static List<String> getOutputTypes() throws IOException {
+	public static ArrayList<String> getOutputTypes() throws IOException {
 		return getPackageContent("output");
 	}
 
-	private static List<String> getPackageContent(String packageName) throws IOException {
+	private static ArrayList<String> getPackageContent(String packageName) throws IOException {
 		
 		ArrayList<String> classes = new ArrayList<String>();
-		classes.add("SQLOutput");
+		classes.add("SQLFileOutput");
 		/*
 		Enumeration<URL> urls = Thread.currentThread().getContextClassLoader().getResources(packageName);
 		while (urls.hasMoreElements()) {

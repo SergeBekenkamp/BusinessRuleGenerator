@@ -1,16 +1,94 @@
 package generation;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
 public class Language {
 	String name;
-	String file;
+	String location;
 	List<LanguageElement> languageElements = new ArrayList<LanguageElement>();
 
-	public Language(String name, String file) {
+	public Language(String name, String location) {
 		this.name = name;
-		this.file = file;
+		this.location = location;
+	}
+	
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void loadLanguage() {
+		try {
+			 
+			File fXmlFile = new File(location + "\\" + name +".xml");
+			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+			Document doc = dBuilder.parse(fXmlFile);
+		 
+			//optional, but recommended
+			//read this - http://stackoverflow.com/questions/13786607/normalization-in-dom-parsing-with-java-how-does-it-work
+			doc.getDocumentElement().normalize();
+		 
+			NodeList nList = doc.getElementsByTagName(name);
+		 
+			for (int temp = 0; temp < nList.getLength(); temp++) {
+				Node nNode = nList.item(temp);
+				if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+					Element eElement = (Element) nNode;
+					
+					LanguageElement between = new LanguageElement(
+							"Between", 
+							eElement.getElementsByTagName("Between").item(0).getTextContent());
+					LanguageElement notBetween = new LanguageElement(
+							"NotBetween", 
+							eElement.getElementsByTagName("NotBetween").item(0).getTextContent());
+					LanguageElement equals = new LanguageElement(
+							"Equals", 
+							eElement.getElementsByTagName("Equals").item(0).getTextContent());
+					LanguageElement notEquals = new LanguageElement(
+							"NotEquals", 
+							eElement.getElementsByTagName("NotEquals").item(0).getTextContent());
+					LanguageElement lessThan = new LanguageElement(
+							"LessThan", 
+							eElement.getElementsByTagName("LessThan").item(0).getTextContent());
+					LanguageElement greaterThan = new LanguageElement(
+							"GreaterThan", 
+							eElement.getElementsByTagName("GreaterThan").item(0).getTextContent());
+					LanguageElement lessOrEqualTo = new LanguageElement(
+							"LessOrEqualTo", 
+							eElement.getElementsByTagName("LessOrEqualTo").item(0).getTextContent());
+					LanguageElement greaterOrEqualTo = new LanguageElement(
+							"GreaterOrEqualTo", 
+							eElement.getElementsByTagName("GreaterOrEqualTo").item(0).getTextContent());
+					
+					this.addElement(between);
+					this.addElement(notBetween);
+					this.addElement(equals);
+					this.addElement(notEquals);
+					this.addElement(lessThan);
+					this.addElement(greaterThan);
+					this.addElement(lessOrEqualTo);
+					this.addElement(greaterOrEqualTo);
+					
+					System.out.println("greq test: " + eElement.getElementsByTagName("GreaterOrEqualTo").item(0).getTextContent());
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	public String getElement(String elementName) {
@@ -23,11 +101,11 @@ public class Language {
 
 	}
 
-	public void AddElement(LanguageElement e) {
+	public void addElement(LanguageElement e) {
 		languageElements.add(e);
 	}
 
-	public void RemoveElement(LanguageElement e) {
+	public void removeElement(LanguageElement e) {
 		languageElements.remove(e);
 	}
 

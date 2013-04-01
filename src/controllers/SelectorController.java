@@ -44,11 +44,15 @@ public class SelectorController extends HttpServlet {
 			ruletypes.add(s);
 		}
 		request.setAttribute("ruletypes", ruletypes);
-
-		request.setAttribute("generateOptions", OutputFactory.getOutputTypes());
+		
+		
+		request.setAttribute("output", OutputFactory.getOutputTypes());
+		
+		request.setAttribute("languages", OutputFactory.getOutputTypes());
 
 		RequestDispatcher rd = request.getRequestDispatcher("selector.jsp");
 		rd.forward(request, response);
+		
 	}
 
 	@Override

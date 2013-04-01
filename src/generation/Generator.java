@@ -33,15 +33,18 @@ public class Generator {
 	}
 
 	public void generate() throws ClassNotFoundException, InstantiationException, IllegalAccessException {
+		selectedLanguage.loadLanguage();
 		IOutput output = OutputFactory.createOutput(outputType);
 		for (BusinessRule b : businessRules) {
+			System.out.println("operator name: " + b.getOperator().getName());
 			replacers = setReplacers(b);
-			TemplateLoader fileIterator = new TemplateLoader(outputLocation + "\\" +outputType + "\\" + b.getBusinessRuleType().getCode() + ".txt");
+			TemplateLoader fileIterator = new TemplateLoader(outputLocation + "\\" + selectedLanguage.getName() + "\\" + b.getBusinessRuleType().getCode() + ".txt");
 			String s = "";
 			while (s != null) {
 				s = fileIterator.nextLine();
 				if (s != null) {
 					for (Map.Entry<String, String> entry : replacers.entrySet()) {
+						s = s.replaceAll("<<operator>>", selectedLanguage.getElement(b.getOperator().getName()));
 						s = s.replaceAll(entry.getKey(), entry.getValue());
 					}
 					output.addString(s);

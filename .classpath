@@ -13,6 +13,6 @@
 			<attribute name="owner.project.facets" value="java"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="D:/Dropbox/ojdbc6.jar"/>
+	<classpathentry exported="true" kind="lib" path="web/WEB-INF/lib/ojdbc6.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

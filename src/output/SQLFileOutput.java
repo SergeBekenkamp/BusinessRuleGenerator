@@ -5,7 +5,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class SQLOutput implements IOutput {
+public class SQLFileOutput implements IOutput {
 	
 	StringBuilder sb = new StringBuilder();
 
@@ -31,7 +31,4 @@ public class SQLOutput implements IOutput {
 		return true;
 	}
 	
-	
-	
-
 }
