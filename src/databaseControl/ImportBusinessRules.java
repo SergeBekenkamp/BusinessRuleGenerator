@@ -12,7 +12,7 @@ public class ImportBusinessRules {
 	private DatabaseConnection dbConn;
 
 	public ImportBusinessRules() {
-		dbConn = new DatabaseConnection();
+		dbConn = new DatabaseConnection("oracle-sourcedb");
 	}
 
 	public BusinessRule getBusinessRule(int businessRuleId) {

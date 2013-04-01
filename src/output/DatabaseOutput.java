@@ -22,8 +22,9 @@ public class DatabaseOutput implements IOutput {
 	@Override
 	public boolean doOutput() {
 		for (String code: codes.values()) {
-			if(!dbcon.executeQuery(code))
-				return false;
+			System.out.println(code);
+			//if(!dbcon.executeQuery(code))
+				//return false;
 		}
 		return true;
 	}

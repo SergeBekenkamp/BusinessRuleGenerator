@@ -10,11 +10,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import output.OutputFactory;
-
+import databaseControl.ImportBusinessRules;
 import domain.BusinessRule;
 import domain.BusinessRuleType;
 import domain.Category;
-import domain.ImportBusinessRules;
 
 public class SelectorController extends HttpServlet {
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

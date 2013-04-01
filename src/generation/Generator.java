@@ -1,15 +1,9 @@
 package generation;
 
-import java.io.IOException;
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.servlet.GenericServlet;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 
 import output.IOutput;
 import output.OutputFactory;
@@ -20,41 +14,45 @@ public class Generator {
 	private Language selectedLanguage;
 	private List<BusinessRule> businessRules;
 	private Map<String, String> replacers = new HashMap<String, String>();
-	String outputType;
-	String outputLocation;
-
-	
+	private String outputType;
+	private String templateDir;
 
 	public Generator(Language language, List<BusinessRule> businessRules, String outputType, String dataLocation) {
 		this.selectedLanguage = language;
 		this.businessRules = businessRules;
 		this.outputType = outputType;
-		this.outputLocation = dataLocation;
+		this.templateDir = dataLocation;
 	}
 
 	public void generate() throws ClassNotFoundException, InstantiationException, IllegalAccessException {
 		selectedLanguage.loadLanguage();
 		IOutput output = OutputFactory.createOutput(outputType);
-		for (BusinessRule b : businessRules) {
-			System.out.println("operator name: " + b.getOperator().getName());
-			replacers = setReplacers(b);
-			TemplateLoader fileIterator = new TemplateLoader(outputLocation + "\\" + selectedLanguage.getName() + "\\" + b.getBusinessRuleType().getCode() + ".txt");
-			String s = "";
-			while (s != null) {
-				s = fileIterator.nextLine();
-				if (s != null) {
+		HashMap<String, String> codes = new HashMap<>();
+		
+		for (BusinessRule br : businessRules) {
+			replacers = setReplacers(br);
+			
+			String line = "";			
+			TemplateLoader fileIterator = new TemplateLoader(templateDir + File.separator + selectedLanguage.getName() 
+						+ File.separator + br.getBusinessRuleType().getCode() + ".txt");
+			
+			StringBuilder sb = new StringBuilder();
+			
+			while (line != null) {
+				line = fileIterator.nextLine();
+				if (line != null) { 
 					for (Map.Entry<String, String> entry : replacers.entrySet()) {
-						s = s.replaceAll("<<operator>>", selectedLanguage.getElement(b.getOperator().getName()));
-						s = s.replaceAll(entry.getKey(), entry.getValue());
+						line = line.replaceAll("<<operator>>", selectedLanguage.getElement(br.getOperator().getName()));
+						line = line.replaceAll(entry.getKey(), entry.getValue());
 					}
-					output.addString(s);
+					sb.append(line + "\n");				
 				}
 			}
-			
+			codes.put(br.getName(), sb.toString());
 			fileIterator.close();
 		}
-		output.saveOutput(outputLocation + "\\output");
-
+		output.setCode(codes);
+		output.doOutput();
 	}
 
 	private Map<String, String> setReplacers(BusinessRule br) {
