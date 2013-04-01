@@ -33,7 +33,7 @@ public class Language {
 	public void loadLanguage() {
 		try {
 			 
-			File fXmlFile = new File(location + "\\" + name +".xml");
+			File fXmlFile = new File(location + File.separator + name +".xml");
 			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 			Document doc = dBuilder.parse(fXmlFile);

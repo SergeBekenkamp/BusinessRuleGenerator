@@ -24,6 +24,7 @@ public class OutputFactory {
 		
 		ArrayList<String> classes = new ArrayList<String>();
 		classes.add("SQLFileOutput");
+		classes.add("DatabaseOutput");
 		/*
 		Enumeration<URL> urls = Thread.currentThread().getContextClassLoader().getResources(packageName);
 		while (urls.hasMoreElements()) {

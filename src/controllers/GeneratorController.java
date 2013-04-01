@@ -4,10 +4,8 @@ import generation.Generator;
 import generation.Language;
 import generation.TemplateLoader;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
+import java.io.File;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
@@ -20,6 +18,8 @@ import databaseControl.ImportBusinessRules;
 import domain.BusinessRule;
 
 public class GeneratorController extends HttpServlet {
+
+	private static final long serialVersionUID = 1L;
 
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setAttribute("output", getGeneratedCode());
@@ -47,7 +47,9 @@ public class GeneratorController extends HttpServlet {
 		
 		System.out.println(this.getServletContext().getRealPath("templates"));
 		Language language = new Language(lang, this.getServletContext().getRealPath("languages"));
-		Generator gen = new Generator(language, selectedBusinessRules, outputType, this.getServletContext().getRealPath("templates"));
+		String templateDir = this.getServletContext().getRealPath("templates");
+		String outputLocation = this.getServletContext().getRealPath("output");
+		Generator gen = new Generator(language, selectedBusinessRules, outputType, templateDir, outputLocation);
 
 		try {
 			gen.generate();
@@ -60,7 +62,7 @@ public class GeneratorController extends HttpServlet {
 	}
 	
 	protected String getGeneratedCode(){
-		TemplateLoader tl = new TemplateLoader(this.getServletContext().getRealPath("templates") + "\\output.txt");
+		TemplateLoader tl = new TemplateLoader(this.getServletContext().getRealPath("templates") + File.separator + "output.sql");
 		String s = "", s2 = "";
 		while (s2 != null) {
 		s2 = tl.nextLine();

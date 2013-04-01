@@ -21,10 +21,12 @@ public class SelectorController extends HttpServlet {
 
 		ImportBusinessRules ibr = new ImportBusinessRules();
 		
-		String selected = (String) request.getAttribute("selected");
-		int category = (int) request.getAttribute("cat");
-		int ruleType = (int) request.getAttribute("brt");
-		int entity = (int) request.getAttribute("ent");
+		String selected = null;
+		
+//		String selected = (String) request.getAttribute("selected");
+//		int category = (int) request.getAttribute("cat");
+//		int ruleType = (int) request.getAttribute("brt");
+//		int entity = (int) request.getAttribute("ent");
 		
 		
 		if (selected != null){
@@ -70,7 +72,7 @@ public class SelectorController extends HttpServlet {
 			String s = ent.getId() + "," + ent.getTableName();
 			ruletypes.add(s);
 		}
-		request.setAttribute("ruletypes", ruletypes);
+		request.setAttribute("entities", entities);
 		
 		
 		request.setAttribute("output", OutputFactory.getOutputTypes());
