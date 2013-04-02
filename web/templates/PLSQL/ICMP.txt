@@ -1,0 +1,28 @@
+-- TRIGGER FOR INTER-ENTITY COMPARE RULE (ICMP)
+
+-- Comments: <<comment>>
+
+CREATE OR REPLACE TRIGGER <<trigger_name>>
+BEFORE <<trigger_event>>
+OF <<col_name>> ON <<table_name>>
+FOR EACH ROW
+declare
+  l_passed boolean := true;
+  l_error_stack varchar2(4000);
+cursor lc_c is
+  select <<second_table_name>>.<<second_col_name>>
+  from <<second_table_name>>
+  where :new.<<first_table_fid>> = <<table_name>>.<<second_table_pid>>;
+  l_tempval  <<second_table_name>>.<<second_col_name>>%type;
+BEGIN
+  open lc_c;
+  fetch lc_c into l_tempval;
+  close lc_c;
+  
+  l_passed := :NEW.<<col_name>> <<operator>> l_tempval;
+  if not l_passed then
+   	<<error>>
+    l_error_stack := l_error_stack || 'The value of <<table_name>>.<<col_name>> is not <<operator>> <<table_name>>.<<second_col_name>>';
+    raise_application_error(-20000, l_error_stack);
+  end if;  
+END; 

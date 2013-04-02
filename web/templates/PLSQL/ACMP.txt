@@ -10,6 +10,7 @@ DECLARE
 BEGIN
   l_passed := :NEW.<<column_name>> <<operator>> '<<value1>>';
   IF NOT l_passed THEN
+  	<<error>>
     l_error_stack := l_error_stack || 'The value of <<column_name>> is not <<operator>> <<value1>>';
     raise_application_error(-20000, l_error_stack);
   END IF;  

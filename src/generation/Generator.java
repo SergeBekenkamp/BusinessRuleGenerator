@@ -47,7 +47,7 @@ public class Generator {
 						line = line.replaceAll("<<operator>>", selectedLanguage.getElement(br.getOperator().getName()));
 						line = line.replaceAll(entry.getKey(), entry.getValue());
 					}
-					sb.append(line + "\n");				
+					sb.append(line + "\r\n");				
 				}
 			}
 			codes.put(br.getName(), sb.toString());
@@ -63,10 +63,18 @@ public class Generator {
 		System.out.println("Number of conditional values: " + br.getConditionalValues().size());
 
 		Map<String, String> map = new HashMap<String, String>();
+		if(br.getFailure() != null){
+		map.put("<<error>>", "l_error_stack := l_error_stack || 'Error severity: <<error_severity>> Error message: <<error_message>>';");
+		map.put("<<error_message>>", br.getFailure().getMessage());
+		map.put("<<error_severity>>", br.getFailure().getSeverity());
+		} else {
+			map.put("<<error>>", "");
+		}
 		map.put("<<trigger_name>>", br.getBusinessRuleType().getCode() + "_" + br.getName() + "_TRIGGER");
 		map.put("<<trigger_event>>", br.getEvent().toString());
 		map.put("<<column_name>>", br.getAttribute().getColumnName());
 		map.put("<<entity_name>>", br.getAttribute().getEntity().getTableName());
+		
 
 		// String operator =
 		// selectedLanguage.getElement(br.getOperator().getName());

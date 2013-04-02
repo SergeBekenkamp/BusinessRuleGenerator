@@ -70,6 +70,5 @@ public class GeneratorController extends HttpServlet {
 		}
 		tl.close();
 		return s;
-		
 	}
 }

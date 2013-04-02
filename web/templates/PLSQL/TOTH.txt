@@ -1,0 +1,19 @@
+-- TRIGGER FOR TUPLE OTHER RULE (TOTH)
+
+-- Comments: <<comment>>
+
+CREATE OR REPLACE TRIGGER <<trigger_name>>
+BEFORE <<trigger_event>>
+OF <<col_name>>, <<second_col_name>> ON <<table_name>>
+FOR EACH ROW
+declare
+  l_passed boolean := true;
+  l_error_stack varchar2(4000);
+BEGIN
+  <<customsql>>
+  if not l_passed then
+   	<<error>>
+    l_error_stack := l_error_stack || 'The code <<customsql>> didn't pass.';
+    raise_application_error(-20000, l_error_stack);
+  end if;  
+END; 
