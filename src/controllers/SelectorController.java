@@ -24,17 +24,15 @@ public class SelectorController extends HttpServlet {
 		String selected = this.convertStringParam(request.getParameter("selected"));
 		int category = this.convertIntParam(request.getParameter("cat"));
 		String ruleType = this.convertStringParam(request.getParameter("brt"));
+		int entity = this.convertIntParam(request.getParameter("ent"));
 		
-		
-		System.out.println("controller: " + category);
-		System.out.println("controller: " + ruleType);
 		
 		if (!selected.equals("")){
 			if (selected.equals("true")) {
 				// get businessrules id + name selected from apex
 				ArrayList<String> rules = new ArrayList<>();
 				
-				for (BusinessRule br : ibr.getSelectedBusinessRules(category, ruleType)) {
+				for (BusinessRule br : ibr.getSelectedBusinessRules(category, ruleType, entity)) {
 					String s = br.getId() + "," + br.getName();
 					rules.add(s);
 				}
@@ -43,7 +41,7 @@ public class SelectorController extends HttpServlet {
 		} else {
 			// get all businessrules id + name
 			ArrayList<String> rules = new ArrayList<>();
-			for (BusinessRule br : ibr.getAllBusinessRules(category, ruleType)) {
+			for (BusinessRule br : ibr.getAllBusinessRules(category, ruleType, entity)) {
 				String s = br.getId() + "," + br.getName();
 				rules.add(s);
 			}

@@ -152,7 +152,7 @@ public class ImportBusinessRules {
 		return entity;
 	}
 	
-	public List<BusinessRule> getSelectedBusinessRules(int categoryId, String ruleTypeId) {
+	public List<BusinessRule> getSelectedBusinessRules(int categoryId, String ruleTypeId, int entity) {
 		dbConn.connect();
 		List<BusinessRule> list = new ArrayList<BusinessRule>();
 		ResultSet rs = dbConn.doQuery("SELECT businessrule_id, name FROM businessrule");
@@ -171,28 +171,37 @@ public class ImportBusinessRules {
 		
 	}
 	
-	public List<BusinessRule> getAllBusinessRules(int categoryId, String ruleTypeCode) {
+	public List<BusinessRule> getAllBusinessRules(int categoryId, String ruleTypeCode, int entityId) {
 		String query = "SELECT businessrule_id, name FROM businessrule";
 		String category = "";
 		if (categoryId != 0) {
-			query = "SELECT bru.businessrule_id, bru.name FROM businessrule bru, businessruletype brt " +
-					"WHERE bru.businessruletype_code = brt.code AND category_id = " + categoryId;
+			query = "SELECT bru.businessrule_id, bru.name FROM businessrule bru, businessruletype brt";
+			category = " WHERE bru.businessruletype_code = brt.code AND category_id = " + categoryId;
+		}
+		String entity = "";
+		if (entityId != 0) {
+			if (!category.equals("")) {
+				query = "SELECT bru.businessrule_id, bru.name FROM businessrule bru, businessruletype brt, attribute att";
+				entity = " WHERE bru.businessruletype_code = brt.code AND category_id = " + categoryId + " AND bru.attribute_id = att.attribute_id AND att.entity_id = " + entityId;
+			} else {
+				query = "SELECT bru.businessrule_id, bru.name FROM businessrule bru, attribute att";
+				entity = " WHERE bru.attribute_id = att.attribute_id AND att.entity_id = " + entityId;
+			}
 		}
 		String ruleType = "";
 		if (!ruleTypeCode.equals("")){
-			if (!category.equals("")) {
-				ruleType = " AND businessruletype_code = '" + ruleTypeCode + "'";
+			if (!category.equals("") || !entity.equals("")) {
+				ruleType = " AND bru.businessruletype_code = '" + ruleTypeCode + "'";
 			} else {
 				ruleType = " WHERE businessruletype_code = '" + ruleTypeCode + "'";
 			}
 		}
-		query = query + ruleType;
+		query = query + category + entity + ruleType;
 		
 		
 		dbConn.connect();
 		List<BusinessRule> list = new ArrayList<BusinessRule>();
 		
-		System.out.println("IBR getAll: " + query);
 		ResultSet rs = dbConn.doQuery(query);
 		try {
 			while (rs.next()) {
