@@ -182,7 +182,7 @@ public class ImportBusinessRules {
 		if (entityId != 0) {
 			if (!category.equals("")) {
 				query = "SELECT bru.businessrule_id, bru.name FROM businessrule bru, businessruletype brt, attribute att";
-				entity = " WHERE bru.businessruletype_code = brt.code AND category_id = " + categoryId + " AND bru.attribute_id = att.attribute_id AND att.entity_id = " + entityId;
+				entity = " AND bru.businessruletype_code = brt.code AND category_id = " + categoryId + " AND bru.attribute_id = att.attribute_id AND att.entity_id = " + entityId;
 			} else {
 				query = "SELECT bru.businessrule_id, bru.name FROM businessrule bru, attribute att";
 				entity = " WHERE bru.attribute_id = att.attribute_id AND att.entity_id = " + entityId;
@@ -197,6 +197,8 @@ public class ImportBusinessRules {
 			}
 		}
 		query = query + category + entity + ruleType;
+		
+		System.out.println(query);
 		
 		
 		dbConn.connect();
