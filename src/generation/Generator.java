@@ -47,7 +47,7 @@ public class Generator {
 						line = line.replaceAll("<<operator>>", selectedLanguage.getElement(br.getOperator().getName()));
 						line = line.replaceAll(entry.getKey(), entry.getValue());
 					}
-					sb.append(line + "\n");				
+					sb.append(line + "\r\n");				
 				}
 			}
 			codes.put(br.getName(), sb.toString());

@@ -1,0 +1,18 @@
+-- TRIGGER modify RULE (MODI)
+
+-- Comments: <<comment>>
+
+CREATE OR REPLACE TRIGGER <<trigger_name>>
+BEFORE <<trigger_event>>
+ON <<table_name>>
+FOR EACH ROW
+declare
+  l_passed boolean := true;
+  l_error_stack varchar2(4000);
+BEGIN
+  l_passed := :OLD.<<col_name>> <<operator>> :NEW.<<col_name>>;
+  if not l_passed then
+    l_error_stack := l_error_stack || 'Cannot change or delete the value of <<table_name>>.<<col_name>>';
+    raise_application_error(-20000, l_error_stack);
+  end if;  
+END; 

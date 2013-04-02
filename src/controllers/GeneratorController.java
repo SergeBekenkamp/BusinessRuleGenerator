@@ -62,7 +62,7 @@ public class GeneratorController extends HttpServlet {
 	}
 	
 	protected String getGeneratedCode(){
-		TemplateLoader tl = new TemplateLoader(this.getServletContext().getRealPath("templates") + File.separator + "output.sql");
+		TemplateLoader tl = new TemplateLoader(this.getServletContext().getRealPath("output") + File.separator + "output.sql");
 		String s = "", s2 = "";
 		while (s2 != null) {
 		s2 = tl.nextLine();
@@ -70,6 +70,5 @@ public class GeneratorController extends HttpServlet {
 		}
 		tl.close();
 		return s;
-		
 	}
 }
