@@ -12,6 +12,7 @@ declare
 BEGIN
   <<customsql>>
   if not l_passed then
+   	<<error>>
     l_error_stack := l_error_stack || 'The code <<customsql>> didn't pass.';
     raise_application_error(-20000, l_error_stack);
   end if;  

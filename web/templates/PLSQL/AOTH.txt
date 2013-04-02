@@ -12,6 +12,7 @@ declare
 BEGIN
   l_passed := <<value1>>;
   if not l_passed then
+   	<<error>>
     l_error_stack := l_error_stack || '<<table_name>>.<<col_name>> did not match <<value1>>';
     raise_application_error(-20000, l_error_stack);
   end if;  
