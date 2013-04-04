@@ -25,7 +25,7 @@ public class GeneratorController extends HttpServlet {
 		request.setAttribute("output", getGeneratedCode());
 		RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
 		rd.forward(request, response);
-		
+
 	}
 
 	@Override
@@ -44,7 +44,7 @@ public class GeneratorController extends HttpServlet {
 		for (String businessRule : businessRules) {
 			selectedBusinessRules.add(ibr.getBusinessRule(Integer.parseInt(businessRule)));
 		}
-		
+
 		System.out.println(this.getServletContext().getRealPath("templates"));
 		Language language = new Language(lang, this.getServletContext().getRealPath("languages"));
 		String templateDir = this.getServletContext().getRealPath("templates");
@@ -60,13 +60,13 @@ public class GeneratorController extends HttpServlet {
 
 		processRequest(request, response);
 	}
-	
-	protected String getGeneratedCode(){
+
+	protected String getGeneratedCode() {
 		TemplateLoader tl = new TemplateLoader(this.getServletContext().getRealPath("output") + File.separator + "output.sql");
 		String s = "", s2 = "";
 		while (s2 != null) {
-		s2 = tl.nextLine();
-		s += s2;
+			s2 = tl.nextLine();
+			s += s2 + "</br>";
 		}
 		tl.close();
 		return s;

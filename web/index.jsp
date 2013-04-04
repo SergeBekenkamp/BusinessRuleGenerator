@@ -8,7 +8,7 @@
 </head>
 <body>
 
-<div id="container">
+<div id="container" style="overflow-y:scroll;">
 <% out.print(request.getAttribute("output")); %>
 </div>
 
