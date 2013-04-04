@@ -44,6 +44,7 @@ public class Generator {
 				line = fileIterator.nextLine();
 				if (line != null) { 
 					for (Map.Entry<String, String> entry : replacers.entrySet()) {
+						///: todo
 						line = line.replaceAll("<<operator>>", selectedLanguage.getElement(br.getOperator().getName()));
 						line = line.replaceAll(entry.getKey(), entry.getValue());
 					}
