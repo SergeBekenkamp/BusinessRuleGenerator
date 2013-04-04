@@ -61,7 +61,6 @@ public class Language {
 								operator.getName(),
 								eElement.getElementsByTagName(operator.getName()).item(0).getTextContent());
 						this.addElement(langElement);
-						System.out.println("All Operators From Language: " + operator.getName());
 					}
 				}
 			}

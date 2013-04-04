@@ -22,19 +22,6 @@ public class GeneratorController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setAttribute("output", getGeneratedCode());
-		RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
-		rd.forward(request, response);
-
-	}
-
-	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		processRequest(request, response);
-	}
-
-	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String[] businessRules = request.getParameterValues("businessRules");
 		ImportBusinessRules ibr = new ImportBusinessRules();
 		String outputType = request.getParameter("output");
@@ -57,18 +44,33 @@ public class GeneratorController extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		request.setAttribute("output", getGeneratedCode());
+		RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
+		rd.forward(request, response);
 
-		processRequest(request, response);
 	}
-
+	
 	protected String getGeneratedCode() {
 		TemplateLoader tl = new TemplateLoader(this.getServletContext().getRealPath("output") + File.separator + "output.sql");
 		String s = "", s2 = "";
 		while (s2 != null) {
 			s2 = tl.nextLine();
-			s += s2 + "</br>";
+			if (s2 != null) {
+				s += s2 + "</br>";
+			}
 		}
 		tl.close();
 		return s;
+	}
+
+	@Override
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		processRequest(request, response);
+	}
+
+	@Override
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		processRequest(request, response);
 	}
 }

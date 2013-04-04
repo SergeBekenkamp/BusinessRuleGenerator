@@ -198,9 +198,6 @@ public class ImportBusinessRules {
 		}
 		query = query + category + entity + ruleType;
 		
-		System.out.println(query);
-		
-		
 		dbConn.connect();
 		List<BusinessRule> list = new ArrayList<BusinessRule>();
 		
@@ -274,7 +271,21 @@ public class ImportBusinessRules {
 	}
 
 	public List<Operator> getOperators() {
-		return null;
+		dbConn.connect();
+		List<Operator> list = new ArrayList<Operator>();
+		ResultSet rs = dbConn.doQuery("SELECT * FROM operator");
+		try {
+			while (rs.next()) {
+				Operator operator = new Operator(rs.getInt("OPERATOR_ID"), rs.getString("NAME"));
+				list.add(operator);
+			}
+		} catch (SQLException e) {
+			System.err.println(e);
+		}
+
+		dbConn.closeConnection();
+
+		return list;
 	}
 
 }
