@@ -69,7 +69,18 @@ public class Generator {
 		} else {
 			map.put("<<error>>", "");
 		}
-		map.put("<<trigger_name>>", br.getBusinessRuleType().getCode() + "_" + br.getName() + "_TRIGGER");
+		String entityname = br.getEntity().getTableName();
+		entityname = (entityname.substring(0,2) + entityname.substring(entityname.length()-1));
+		entityname = entityname.toUpperCase();
+		String name = "BRG_" + br.getBusinessRuleType().getCode() + "_" + entityname  + "_" + br.getName() + "_TRI"; 
+		if(name.length() > 30){
+			String n = br.getName();
+			n = n.substring(0, 5);
+			n += br.getName().substring(br.getName().length() - 5);
+			name = "BRG_" + br.getBusinessRuleType().getCode() + "_" + entityname  + "_" + n + "_TRI";
+		}
+		
+		map.put("<<trigger_name>>", name);
 		map.put("<<trigger_event>>", br.getEvent().toString());
 		map.put("<<column_name>>", br.getAttribute().getColumnName());
 		map.put("<<entity_name>>", br.getAttribute().getEntity().getTableName());
