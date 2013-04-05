@@ -57,9 +57,10 @@ public class Language {
 					LanguageElement langElement = null;
 					
 					for (Operator operator : operators) {
+						String opName = operator.getName().toLowerCase();
 						langElement = new LanguageElement(
-								operator.getName(),
-								eElement.getElementsByTagName(operator.getName()).item(0).getTextContent());
+								opName,
+								eElement.getElementsByTagName(opName).item(0).getTextContent());
 						this.addElement(langElement);
 					}
 				}
@@ -71,7 +72,7 @@ public class Language {
 
 	public String getElement(String elementName) {
 		for (LanguageElement e : languageElements) {
-			if (e.getElementName().equals(elementName)) {
+			if (e.getElementName().equals(elementName.toLowerCase())) {
 				return e.getElementValue();
 			}
 		}
