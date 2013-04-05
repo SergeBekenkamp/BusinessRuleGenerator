@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PLSQL>
-	<Between>BETWEEN</Between>
-	<NotBetween>NOT BETWEEN</NotBetween>
-	<Equals>=</Equals>
-	<NotEquals>!=</NotEquals>
-	<LessThan>&lt;</LessThan>
-	<GreaterThan>&gt;</GreaterThan>
-	<LessOrEqualTo>&lt;=</LessOrEqualTo>
-	<GreaterOrEqualTo>&gt;=</GreaterOrEqualTo>
-	<In>IN</In>
-	<NotIn>NOT IN</NotIn>
+	<between>BETWEEN</between>
+	<notbetween>NOT BETWEEN</notbetween>
+	<equals>=</equals>
+	<notequals>!=</notequals>
+	<lessthan>&lt;</lessthan>
+	<greaterthan>&gt;</greaterthan>
+	<lessorequalto>&lt;=</lessorequalto>
+	<greaterorequalto>&gt;=</greaterorequalto>
+	<in>IN</in>
+	<notin>NOT IN</notin>
 </PLSQL>
