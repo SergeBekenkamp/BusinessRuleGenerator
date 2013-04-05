@@ -12,6 +12,9 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import databaseControl.ImportBusinessRules;
+import domain.Operator;
+
 public class Language {
 	String name;
 	String location;
@@ -37,6 +40,9 @@ public class Language {
 			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 			Document doc = dBuilder.parse(fXmlFile);
+			
+			ImportBusinessRules ibr = new ImportBusinessRules();
+			ArrayList<Operator> operators = (ArrayList<Operator>) ibr.getOperators();
 		 
 			//optional, but recommended
 			//read this - http://stackoverflow.com/questions/13786607/normalization-in-dom-parsing-with-java-how-does-it-work
@@ -48,42 +54,14 @@ public class Language {
 				Node nNode = nList.item(temp);
 				if (nNode.getNodeType() == Node.ELEMENT_NODE) {
 					Element eElement = (Element) nNode;
+					LanguageElement langElement = null;
 					
-					LanguageElement between = new LanguageElement(
-							"Between", 
-							eElement.getElementsByTagName("Between").item(0).getTextContent());
-					LanguageElement notBetween = new LanguageElement(
-							"NotBetween", 
-							eElement.getElementsByTagName("NotBetween").item(0).getTextContent());
-					LanguageElement equals = new LanguageElement(
-							"Equals", 
-							eElement.getElementsByTagName("Equals").item(0).getTextContent());
-					LanguageElement notEquals = new LanguageElement(
-							"NotEquals", 
-							eElement.getElementsByTagName("NotEquals").item(0).getTextContent());
-					LanguageElement lessThan = new LanguageElement(
-							"LessThan", 
-							eElement.getElementsByTagName("LessThan").item(0).getTextContent());
-					LanguageElement greaterThan = new LanguageElement(
-							"GreaterThan", 
-							eElement.getElementsByTagName("GreaterThan").item(0).getTextContent());
-					LanguageElement lessOrEqualTo = new LanguageElement(
-							"LessOrEqualTo", 
-							eElement.getElementsByTagName("LessOrEqualTo").item(0).getTextContent());
-					LanguageElement greaterOrEqualTo = new LanguageElement(
-							"GreaterOrEqualTo", 
-							eElement.getElementsByTagName("GreaterOrEqualTo").item(0).getTextContent());
-					
-					this.addElement(between);
-					this.addElement(notBetween);
-					this.addElement(equals);
-					this.addElement(notEquals);
-					this.addElement(lessThan);
-					this.addElement(greaterThan);
-					this.addElement(lessOrEqualTo);
-					this.addElement(greaterOrEqualTo);
-					
-					System.out.println("greq test: " + eElement.getElementsByTagName("GreaterOrEqualTo").item(0).getTextContent());
+					for (Operator operator : operators) {
+						langElement = new LanguageElement(
+								operator.getName(),
+								eElement.getElementsByTagName(operator.getName()).item(0).getTextContent());
+						this.addElement(langElement);
+					}
 				}
 			}
 		} catch (Exception e) {
@@ -98,7 +76,6 @@ public class Language {
 			}
 		}
 		return "";
-
 	}
 
 	public void addElement(LanguageElement e) {

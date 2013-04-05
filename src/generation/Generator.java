@@ -27,7 +27,7 @@ public class Generator {
 	}
 
 	public void generate() throws ClassNotFoundException, InstantiationException, IllegalAccessException {
-		selectedLanguage.loadLanguage();
+		
 		IOutput output = OutputFactory.createOutput(outputType);
 		HashMap<String, String> codes = new HashMap<>();
 		
@@ -44,8 +44,6 @@ public class Generator {
 				line = fileIterator.nextLine();
 				if (line != null) { 
 					for (Map.Entry<String, String> entry : replacers.entrySet()) {
-						///: todo
-						line = line.replaceAll("<<operator>>", selectedLanguage.getElement(br.getOperator().getName()));
 						line = line.replaceAll(entry.getKey(), entry.getValue());
 					}
 					sb.append(line + "\r\n");				
@@ -87,10 +85,8 @@ public class Generator {
 		map.put("<<column_name>>", br.getAttribute().getColumnName());
 		map.put("<<entity_name>>", br.getAttribute().getEntity().getTableName());
 		
-
-		// String operator =
-		// selectedLanguage.getElement(br.getOperator().getName());
-		map.put("<<operator>>", "test");
+		selectedLanguage.loadLanguage();
+		map.put("<<operator>>", selectedLanguage.getElement(br.getOperator().getName()));
 
 		String multiValues = "";
 		String comma = "";
