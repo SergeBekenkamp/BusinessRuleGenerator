@@ -16,6 +16,14 @@
         <servlet-name>SelectorController</servlet-name>
         <url-pattern>/selector</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>InfoController</servlet-name>
+        <servlet-class>controllers.InfoController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>InfoController</servlet-name>
+        <url-pattern>/info</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30

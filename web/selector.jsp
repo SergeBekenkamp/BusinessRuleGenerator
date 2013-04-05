@@ -10,6 +10,12 @@
 %>
 <script language="JavaScript">
 <!--
+function getInfo(id){
+	$.get("info?businessrule=" + id, function(data) {
+		 $('#ruleinfo').empty();
+		 $('#ruleinfo').append(data);
+		});
+}
 function checkAll(chkboxName) {
 	var checkboxes = document.getElementsByName(chkboxName);
 	for ( var i = 0; i < checkboxes.length; i++) {
@@ -98,7 +104,7 @@ function toggle(chkBox, field) {
 					String[] parts = s.split(",");
 					String id = parts[0];
 					String name = parts[1]; %>
-					<input type="checkbox" name="businessRules" value="<% out.print(id); %>" /><% out.print(name); %><br />
+					<input type="checkbox"   name="businessRules" value="<% out.print(id); %>" /><a onClick="getInfo(<%=id%>)"><% out.print(name); %></a><br />
 			<% } %>
 		</div>
 		<input type="submit" name="generate" value="Generate" />
