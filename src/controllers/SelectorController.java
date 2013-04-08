@@ -2,6 +2,8 @@ package controllers;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -22,6 +24,11 @@ public class SelectorController extends HttpServlet {
 		ImportBusinessRules ibr = new ImportBusinessRules();
 		
 		String selected = this.convertStringParam(request.getParameter("selected"));
+		String brsids = this.convertStringParam(request.getParameter("P9_BRSIDS"));
+		List<String> brsidsList = new ArrayList();
+		if (brsids.isEmpty() == false){
+			brsidsList = Arrays.asList(brsids.split(","));
+		}
 		int category = this.convertIntParam(request.getParameter("cat"));
 		String ruleType = this.convertStringParam(request.getParameter("brt"));
 		int entity = this.convertIntParam(request.getParameter("ent"));
@@ -41,9 +48,10 @@ public class SelectorController extends HttpServlet {
 		} else {
 			// get all businessrules id + name
 			ArrayList<String> rules = new ArrayList<>();
-			for (BusinessRule br : ibr.getAllBusinessRules(category, ruleType, entity)) {
+			for (BusinessRule br : ibr.getAllBusinessRules(category, ruleType, entity)) {				
 				String s = br.getId() + "," + br.getName();
-				rules.add(s);
+				if(brsidsList.contains(br.getId().toString()))
+					rules.add(s);
 			}
 			request.setAttribute("rules", rules);
 		}

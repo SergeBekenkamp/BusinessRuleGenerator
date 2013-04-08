@@ -3,7 +3,7 @@ package domain;
 import java.util.ArrayList;
 
 public class BusinessRule {
-	private int id;
+	private Integer id;
 	private String name;
 	private BusinessRuleType businessRuleType;
 	private Operator operator;
@@ -28,7 +28,7 @@ public class BusinessRule {
 		this.failure = failure;
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 

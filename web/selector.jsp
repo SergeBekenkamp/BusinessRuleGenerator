@@ -108,8 +108,10 @@ function toggle(chkBox, field) {
 			<% } %>
 		</div>
 		<input type="submit" name="generate" value="Generate" />
+		<br/>
+		<a href="http://ondora01.hu.nl:8080/apex/f?p=505:1:8000225992775025:::::" title="Back to Apex">Back to Apex</a>
 	</form>
 </div>
-
 <div id="ruleinfo"></div>
+
 <jsp:include page="footer.jsp" />
