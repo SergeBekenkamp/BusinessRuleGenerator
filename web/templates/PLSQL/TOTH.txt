@@ -13,7 +13,7 @@ BEGIN
   l_passed := <<value1>>;
   IF NOT l_passed THEN
    	<<error>>
-    l_error_stack := l_error_stack || 'The code <<value1>> didn't pass.';
+    l_error_stack := l_error_stack || 'The code <<trigger_name>> did not pass.';
     raise_application_error(-20000, l_error_stack);
   end if;  
 END; 

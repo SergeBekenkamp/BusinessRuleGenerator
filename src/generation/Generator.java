@@ -26,7 +26,7 @@ public class Generator {
 		this.outputLocation = outputLocation;
 	}
 
-	public void generate() throws ClassNotFoundException, InstantiationException, IllegalAccessException {
+	public String generate() throws ClassNotFoundException, InstantiationException, IllegalAccessException {
 		
 		IOutput output = OutputFactory.createOutput(outputType);
 		HashMap<String, String> codes = new HashMap<>();
@@ -53,7 +53,7 @@ public class Generator {
 			fileIterator.close();
 		}
 		output.setCode(codes);
-		output.doOutput(outputLocation);
+		return output.doOutput(outputLocation);
 	}
 
 	private Map<String, String> setReplacers(BusinessRule br) {
