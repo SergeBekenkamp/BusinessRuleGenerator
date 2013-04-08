@@ -37,31 +37,18 @@ public class GeneratorController extends HttpServlet {
 		String templateDir = this.getServletContext().getRealPath("templates");
 		String outputLocation = this.getServletContext().getRealPath("output");
 		Generator gen = new Generator(language, selectedBusinessRules, outputType, templateDir, outputLocation);
-
+		String output = "";
 		try {
-			gen.generate();
+			output = gen.generate();
 		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-		request.setAttribute("output", getGeneratedCode());
+		request.setAttribute("output", output.replace("\r\n", "<br />"));
 		RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
 		rd.forward(request, response);
 
-	}
-	
-	protected String getGeneratedCode() {
-		TemplateLoader tl = new TemplateLoader(this.getServletContext().getRealPath("output") + File.separator + "output.sql");
-		String s = "", s2 = "";
-		while (s2 != null) {
-			s2 = tl.nextLine();
-			if (s2 != null) {
-				s += s2 + "</br>";
-			}
-		}
-		tl.close();
-		return s;
 	}
 
 	@Override
