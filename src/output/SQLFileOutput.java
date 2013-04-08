@@ -18,12 +18,12 @@ public class SQLFileOutput implements IOutput {
 		for(String code: codes.values()){
 			System.out.println(code);
 			sb.append(code + "\r\n");
-			sb.append("/");
+			sb.append("/ \r\n");
 		}
 	}
 
 	@Override
-	public boolean doOutput(String s) {
+	public String doOutput(String s) {
 		File file = new File(s + File.separator + "output");
 		try {
 		BufferedWriter writer = new BufferedWriter(new FileWriter(file + ".sql"));
@@ -33,10 +33,9 @@ public class SQLFileOutput implements IOutput {
 			System.out.println("Something went wrong with saving the output");
 			System.out.println(e);
 			sb = new StringBuilder();
-			return false;
+			return "Something went wrong with saving the output";
 		}
-		sb = new StringBuilder();
-		return true;
+		return sb.toString();
 	}
 	
 }

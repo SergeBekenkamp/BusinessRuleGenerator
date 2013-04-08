@@ -4,7 +4,7 @@
 
 CREATE OR REPLACE TRIGGER <<trigger_name>>
 BEFORE <<trigger_event>>
-OF <<column_name>> <<column2_name>> ON <<entity_name>>
+OF <<column_name>> ON <<entity_name>>
 FOR EACH ROW
 DECLARE
   l_passed boolean := true;

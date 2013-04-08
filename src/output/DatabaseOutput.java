@@ -16,21 +16,22 @@ public class DatabaseOutput implements IOutput {
 	@Override
 	public void setCode(HashMap<String, String> codes) {
 		this.codes = codes;
-
 	}
 
 	@Override
-	public boolean doOutput(String outputLocation) {
+	public String doOutput(String outputLocation) {
+		String s = "";
 		dbcon.connect();
 		for (String trigger : codes.values()) {
 			System.out.println(trigger);
 			if(!dbcon.executeQuery(trigger)) {
 				dbcon.closeConnection();
-				return false;
+				return "failed";
 			}
+			s += trigger + "\r\n";
 		}
 		dbcon.closeConnection();
-		return true;
+		return s;
 	}
 
 }
