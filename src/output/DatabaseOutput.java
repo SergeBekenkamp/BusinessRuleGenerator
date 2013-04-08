@@ -7,7 +7,7 @@ import databaseControl.DatabaseConnection;
 public class DatabaseOutput implements IOutput {
 	
 	private DatabaseConnection dbcon;
-	private HashMap<String, String> codes;
+	private StringBuilder sb;
 	
 	public DatabaseOutput(){
 		dbcon = new DatabaseConnection("oracle-targetdb");
@@ -15,16 +15,18 @@ public class DatabaseOutput implements IOutput {
 
 	@Override
 	public void setCode(HashMap<String, String> codes) {
-		this.codes = codes;
+		for(String code: codes.values()){
+			System.out.println(code);
+			sb.append(code + "\n\n");			
+		}
 
 	}
 
 	@Override
 	public boolean doOutput(String outputLocation) {
-		for (String code: codes.values()) {
-			System.out.println(code);
-			//if(!dbcon.executeQuery(code))
-				//return false;
+		System.out.println(sb.toString());
+		if(!dbcon.executeQuery(sb.toString())) {
+			return false;
 		}
 		return true;
 	}

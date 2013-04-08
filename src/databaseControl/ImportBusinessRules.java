@@ -152,25 +152,6 @@ public class ImportBusinessRules {
 		return entity;
 	}
 	
-	public List<BusinessRule> getSelectedBusinessRules(int categoryId, String ruleTypeId, int entity) {
-		dbConn.connect();
-		List<BusinessRule> list = new ArrayList<BusinessRule>();
-		ResultSet rs = dbConn.doQuery("SELECT businessrule_id, name FROM businessrule");
-		try {
-			while (rs.next()) {
-				BusinessRule br = new BusinessRule(rs.getInt("businessrule_id"), rs.getString("name"));
-				list.add(br);
-			}
-		} catch (SQLException e) {
-			System.err.println(e);
-		}
-
-		dbConn.closeConnection();
-
-		return list;
-		
-	}
-	
 	public List<BusinessRule> getAllBusinessRules(int categoryId, String ruleTypeCode, int entityId) {
 		String query = "SELECT businessrule_id, name FROM businessrule";
 		String category = "";

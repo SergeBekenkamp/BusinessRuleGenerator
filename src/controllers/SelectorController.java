@@ -23,8 +23,8 @@ public class SelectorController extends HttpServlet {
 
 		ImportBusinessRules ibr = new ImportBusinessRules();
 		
-		String selected = this.convertStringParam(request.getParameter("selected"));
 		String brsids = this.convertStringParam(request.getParameter("P9_BRSIDS"));
+		System.out.println(brsids);
 		List<String> brsidsList = new ArrayList();
 		if (brsids.isEmpty() == false){
 			brsidsList = Arrays.asList(brsids.split(","));
@@ -33,28 +33,19 @@ public class SelectorController extends HttpServlet {
 		String ruleType = this.convertStringParam(request.getParameter("brt"));
 		int entity = this.convertIntParam(request.getParameter("ent"));
 		
-		
-		if (!selected.equals("")){
-			if (selected.equals("true")) {
-				// get businessrules id + name selected from apex
-				ArrayList<String> rules = new ArrayList<>();
-				
-				for (BusinessRule br : ibr.getSelectedBusinessRules(category, ruleType, entity)) {
-					String s = br.getId() + "," + br.getName();
+		// get all businessrules id + name
+		ArrayList<String> rules = new ArrayList<>();
+		for (BusinessRule br : ibr.getAllBusinessRules(category, ruleType, entity)) {				
+			String s = br.getId() + "," + br.getName();
+			if (!brsidsList.isEmpty()) {
+				if(brsidsList.contains(br.getId().toString())) {
 					rules.add(s);
 				}
-				request.setAttribute("rules", rules);
+			} else {
+				rules.add(s);
 			}
-		} else {
-			// get all businessrules id + name
-			ArrayList<String> rules = new ArrayList<>();
-			for (BusinessRule br : ibr.getAllBusinessRules(category, ruleType, entity)) {				
-				String s = br.getId() + "," + br.getName();
-				if(brsidsList.contains(br.getId().toString()))
-					rules.add(s);
-			}
-			request.setAttribute("rules", rules);
 		}
+		request.setAttribute("rules", rules);
 
 		// get all categories id + name
 		ArrayList<String> categories = new ArrayList<>();
