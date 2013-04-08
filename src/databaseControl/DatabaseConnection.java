@@ -53,7 +53,7 @@ public class DatabaseConnection {
 	public boolean executeQuery(String query) {
 		try {
 			Statement statement = con.createStatement();
-			statement.executeQuery(query);
+			statement.execute(query);
 		} catch (java.sql.SQLException e) {
 			System.err.println(e);
 			return false;

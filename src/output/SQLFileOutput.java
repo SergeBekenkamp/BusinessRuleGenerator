@@ -17,7 +17,8 @@ public class SQLFileOutput implements IOutput {
 	public void setCode(HashMap<String, String> codes) {
 		for(String code: codes.values()){
 			System.out.println(code);
-			sb.append(code + "\n\n");			
+			sb.append(code + "\r\n");
+			sb.append("/");
 		}
 	}
 
