@@ -10,7 +10,7 @@ DECLARE
   l_passed boolean := true;
   l_error_stack varchar2(4000);
 BEGIN
-  l_passed := :OLD.<<column_name>> <<operator>> :NEW.<<column_name>>;
+  l_passed := OLD.name != null
   IF NOT l_passed THEN
    	<<error>>
     l_error_stack := l_error_stack || 'Cannot change or delete the value of <<entity_name>>.<<column_name>>';

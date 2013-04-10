@@ -84,6 +84,20 @@ public class Generator {
 		map.put("<<trigger_event>>", br.getEvent().toString());
 		map.put("<<column_name>>", br.getAttribute().getColumnName());
 		map.put("<<entity_name>>", br.getAttribute().getEntity().getTableName());
+		for(ConditionalValue val : br.getConditionalValues()){
+			if(val.getName().equalsIgnoreCase("TargetEntityColumn")){
+				map.put("<<entity2_name>>", val.getAttribute().getEntity().getTableName());
+				map.put("<<column2_name>>", val.getAttribute().getColumnName());
+			}
+			if(val.getName().equals("Key1")){
+				map.put("<<entity1_foreignkey>>", val.getValue());
+				
+			}
+			if(val.getName().equals("Key2")){
+				map.put("<<entity2_primarykey>>", val.getValue());
+
+			}
+		}
 		
 		selectedLanguage.loadLanguage();
 		map.put("<<operator>>", selectedLanguage.getElement(br.getOperator().getName()));

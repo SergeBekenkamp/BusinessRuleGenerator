@@ -1,7 +1,5 @@
 -- TRIGGER FOR INTER-ENTITY COMPARE RULE (ICMP)
 
--- Comments: <<comment>>
-
 CREATE OR REPLACE TRIGGER <<trigger_name>>
 BEFORE <<trigger_event>>
 OF <<column_name>> ON <<entity_name>>
@@ -12,7 +10,7 @@ DECLARE
 CURSOR lc_c IS
   SELECT <<entity2_name>>.<<column2_name>>
   FROM <<entity2_name>>
-  WHERE :NEW.<<entity1_foreignkey>> = <<entity_name>>.<<entity2_primarykey>>;
+  WHERE :NEW.<<entity1_foreignkey>> = <<entity2_name>>.<<entity2_primarykey>>;
   
   l_tempval  <<entity2_name>>.<<column2_name>>%type;
 BEGIN

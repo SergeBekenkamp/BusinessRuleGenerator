@@ -10,6 +10,25 @@
 %>
 <script language="JavaScript">
 <!--
+$(document).ready(function(){ 
+	var $submit = $('input[name=generate]')
+    $('input[name=businessRules]').click(function(){
+        if($('input[name="businessRules"]:checked').length > 0){
+        	
+        	$submit.removeAttr('disabled'); 
+        } else {
+        	 $submit.attr("disabled","disabled"); 
+        }
+    });
+});
+
+function checkEmpty() {
+	
+	    var atLeastOneIsChecked = $('input[name="businessRules"]:checked').length > 0;
+   // filter over the empty inputs
+   return $('#businessRules :checkbox:checked').length > 0;
+}
+
 function getInfo(id){
 	$.get("info?businessrule=" + id, function(data) {
 		 $('#ruleinfo').empty();
@@ -21,6 +40,8 @@ function checkAll(chkboxName) {
 	for ( var i = 0; i < checkboxes.length; i++) {
 		checkboxes[i].checked = true;
 	}
+	var $submit = $('input[name=generate]')
+	$submit.removeAttr('disabled'); 
 }
 
 function uncheckAll(chkboxName) {
@@ -28,6 +49,8 @@ function uncheckAll(chkboxName) {
 	for ( var i = 0; i < checkboxes.length; i++) {
 		checkboxes[i].checked=false;
   }
+	var $submit = $('input[name=generate]');
+	$submit.attr("disabled","disabled");
 }
 function toggle(chkBox, field) {
 	if (chkBox.checked != false) {
@@ -39,7 +62,7 @@ function toggle(chkBox, field) {
 }
 //-->
 </script>
-<div id="filters">
+<div id="filters"  style="overflow-y:scroll;">
 	<h1>Filter</h1>
 	<form name="filter" action="selector" method="get">
 		<h2>Categories</h2>
@@ -107,7 +130,7 @@ function toggle(chkBox, field) {
 					<input type="checkbox"   name="businessRules" value="<% out.print(id); %>" /><a onClick="getInfo(<%=id%>)"><% out.print(name); %></a><br />
 			<% } %>
 		</div>
-		<input type="submit" name="generate" value="Generate" />
+		<input type="submit" name="generate" value="Generate" disabled="disabled" />
 		<br/>
 		<a href="http://ondora01.hu.nl:8080/apex/f?p=505:1:8000225992775025:::::" title="Back to Apex">Back to Apex</a>
 	</form>
